@@ -1,0 +1,18 @@
+
+# Project
+.idea
+dist
+**/.env
+out-tsc
+
+# Node environment
+**/node_modules
+
+# Caches
+.ts-node-cache
+.nyc_output
+coverage
+
+# Misc
+npm-debug.log
+yarn-error.log

@@ -1,0 +1,30 @@
+sudo: required
+dist: trusty
+
+language: node_js
+node_js: '10.15.2'
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - .ts-node-cache
+
+before_install:
+ - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.15.2
+
+install:
+ - $HOME/.yarn/bin/yarn
+
+before_script:
+ - export DISPLAY=:99.0
+
+script:
+ - travis_wait 30 yarn test:ci
+
+deploy:
+  provider: script
+  script: scripts/publish.sh
+  skip_cleanup: true
+  on:
+    branch: master
