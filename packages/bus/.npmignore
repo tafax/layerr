@@ -1,0 +1,13 @@
+
+.idea
+.nvmrc
+.nyc_output
+.gitignore
+
+npm-debug.log
+coverage
+src
+tests
+
+tslint.json
+tsconfig.json

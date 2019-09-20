@@ -1,0 +1,67 @@
+{
+  "name": "@layerr/core",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "Matteo Tafani Alunno <matteo.tafanialunno@gmail.com>",
+  "homepage": "https://github.com/tafax/swiss#readme",
+  "license": "MIT",
+  "module": "./dist/fesm5/core.js",
+  "es2015": "./dist/fesm2015/core.js",
+  "esm5": "./dist/esm5/index.js",
+  "esm2015": "./dist/esm2015/index.js",
+  "fesm5": "./dist/fesm5/core.js",
+  "fesm2015": "./dist/fesm2015/core.js",
+  "main": "./dist/bundles/core.umd.js",
+  "typings": "./dist/types/index.d.ts",
+  "types": "./dist/types/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tafax/layerr.git"
+  },
+  "scripts": {
+    "---------------- UTILITY ----------------": "",
+    "clean": "shx rm -rf dist",
+    "lint": "tslint --project tsconfig.json 'src/**/*.ts' -t stylish",
+    "---------------- BUILDING ----------------": "",
+    "build": "yarn clean && tsc && tsc --target es2018 --outDir ./dist/esm2015",
+    "rollup": "rollup -c ../../compile/rollup.config.js --environment NODE_ENV:production --environment PKG:core",
+    "compile": "yarn build && yarn rollup",
+    "---------------- TESTING ----------------": "",
+    "test": "nyc ../../node_modules/.bin/_mocha --opts tests/mocha.opts 'tests/**/*.tests.ts'",
+    "---------------- CI ----------------": "",
+    "test:ci": "yarn test && nyc report --reporter=text-lcov | coveralls"
+  },
+  "bugs": {
+    "url": "https://github.com/tafax/layerr/issues"
+  },
+  "peerDependencies": {
+    "reflect-metadata": "^0.1.13"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules/",
+      "src/**/errors/**/*.ts",
+      "dist/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true,
+    "report-dir": "./coverage"
+  }
+}
