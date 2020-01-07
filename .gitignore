@@ -4,12 +4,12 @@
 dist
 **/.env
 out-tsc
+packages/**/.npmrc
 
 # Node environment
 **/node_modules
 
 # Caches
-.ts-node-cache
 .nyc_output
 coverage
 
