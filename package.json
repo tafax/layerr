@@ -13,7 +13,9 @@
     "release-it:debug": "lerna run release-it:debug",
     "bootstrap": "lerna bootstrap",
     "---------------- TESTING ----------------": "",
-    "test": "nyc ./node_modules/.bin/_mocha 'packages/**/tests/**/*.tests.ts'"
+    "test": "nyc ./node_modules/.bin/_mocha 'packages/**/tests/**/*.tests.ts'",
+    "---------------- CI ----------------": "",
+    "test:ci": "yarn test && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
     "ts-polyfill": "^3.5.3"
