@@ -16,7 +16,6 @@
     "test:ci": "yarn test && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "semantic-release": "15.9.x",
     "ts-polyfill": "^3.5.3"
   },
   "devDependencies": {
@@ -41,6 +40,7 @@
     "rollup-plugin-terser": "^5.0.0",
     "rollup-plugin-uglify": "^6.0.2",
     "rxjs": "^6.5.3",
+    "semantic-release": "15.9.x",
     "semantic-release-monorepo": "^6.1.1",
     "shx": "^0.3.2",
     "sinon": "^7.5.0",
@@ -50,8 +50,7 @@
     "typemoq": "^2.1.0",
     "typescript": "^3.6.3",
     "typescript-tslint-plugin": "^0.5.0",
-    "webpack-config-utils": "^2.3.1",
-    "semantic-release": "^15.14.0"
+    "webpack-config-utils": "^2.3.1"
   },
   "config": {
     "commitizen": {
