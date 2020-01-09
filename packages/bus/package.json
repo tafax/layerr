@@ -1,7 +1,7 @@
 {
   "name": "@layerr/bus",
   "version": "1.0.0",
-  "description": "> TODO: description",
+  "description": "A powerful library to create a message bus layer in your application",
   "author": "Matteo Tafani Alunno <matteo.tafanialunno@gmail.com>",
   "homepage": "https://github.com/tafax/layerr#readme",
   "license": "MIT",
