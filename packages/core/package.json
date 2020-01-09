@@ -1,7 +1,7 @@
 {
   "name": "@layerr/core",
   "version": "1.0.0",
-  "description": "> TODO: description",
+  "description": "The core of Layerr toolkit",
   "author": "Matteo Tafani Alunno <matteo.tafanialunno@gmail.com>",
   "homepage": "https://github.com/tafax/layerr#readme",
   "license": "MIT",
@@ -39,7 +39,7 @@
   "bugs": {
     "url": "https://github.com/tafax/layerr/issues"
   },
-  "peerDependencies": {
+  "dependencies": {
     "reflect-metadata": "^0.1.13"
   },
   "nyc": {
