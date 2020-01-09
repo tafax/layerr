@@ -39,11 +39,10 @@
   "bugs": {
     "url": "https://github.com/tafax/layerr/issues"
   },
-  "peerDependencies": {
-    "rxjs": "^6.5.3"
-  },
   "dependencies": {
-    "@layerr/core": "*"
+    "@layerr/core": "*",
+    "rxjs": "^6.5.3",
+    "ts-polyfill": "^3.5.3"
   },
   "nyc": {
     "include": [

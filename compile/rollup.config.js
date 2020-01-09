@@ -56,8 +56,8 @@ const plugins = ([
 
 ]);
 
-const peerDependencies = Object.keys(pkg.peerDependencies) || [];
-const isPeer = (moduleID) => !!peerDependencies.find(
+const dependencies = Object.keys(pkg.dependencies) || [];
+const isDep = (moduleID) => !!dependencies.find(
   (value) => !!moduleID.includes(value)
 );
 
@@ -66,7 +66,7 @@ const isExternal = (moduleID) => !(
     moduleID.startsWith('.') ||
     moduleID.startsWith('@layerr')
   ) &&
-    isPeer(moduleID);
+    isDep(moduleID);
 
 // The shared config.
 const CommonConfig = {
