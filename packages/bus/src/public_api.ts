@@ -13,8 +13,6 @@ export { BusError } from './errors/bus.error';
 
 export { Handler } from './decorator/handler';
 
-/* Class Map */
-
 // Lookup
 export { HandlerLookupInterface } from './message-handler/message-mapper/handler-lookup/handler-lookup.interface';
 
@@ -33,8 +31,6 @@ export { FunctionConstructorMessageTypeExtractor } from './message-handler/messa
 // Message mapper
 export { MessageMapperInterface } from './message-handler/message-mapper/message-mapper.interface';
 export { MessageMapper } from './message-handler/message-mapper/message.mapper';
-
-/* End Class Map */
 
 // Message Handler
 export { MessageHandlerMiddleware } from './message-handler/message-handler.middleware';
