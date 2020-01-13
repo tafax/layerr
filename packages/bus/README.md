@@ -20,28 +20,64 @@ Use [yarn](https://yarnpkg.com/) package manager to install it.
 yarn add @layerr/bus
 ```
 
-## Usage
+## Quick usage
 
-**BusLayerr** can be used to create a generic **message bus**. What the message does
-when it is sent over the bus is demanded to the middlewares.
+**BusLayerr** allows to create a generic bus to send any type of message
+and handling them with functions.
+
+```typescript
+const mapping = [
+  { 
+    message: 'message1', 
+    handler: (message: string) => {
+      // message === 'message1'
+    } 
+  },
+  { 
+    message: 'message2', 
+    handler: (message: string) => {
+      // message === 'message2'
+    } 
+  },
+];
+
+const messageBus = GeneralPurposeBusFactory.Create(mapping);
+```
+
+Handle a message by calling the method to send over the bus:
+```typescript
+messageBus.handle('message1');
+
+// It will call the handler for message1.
+
+...
+
+messageBus.handle('message2');
+
+// It will call the handler for message2.
+```
+
+## Advanced usage
+
+**BusLayerr** can be used to create a more sophisticate message bus.
 
 ### MessageBus
 
-To create a simple message bus we can use `MessageBus` class.
-For this example, we're going to create a message bus to handle commands:
+To create a message bus we can use `MessageBus` class.
+For this example, we're going to create a message bus to handle messages as commands:
 ```typescript
 const commandBus = new MessageBus([
   new MessageHandlerMiddleware(messageMapper)
 ]);
 ```
 This represents a command bus, it is just a convenient way to call a message bus
-that executes a specific handler when a message is sent to the bus itself.
+that executes a specific handler that changes the app state when a message is sent to the bus itself.
 `MessageBus` accepts an array of middlewares conform to `MessageBusMiddlewareInterface`. We used `MessageHandlerMiddleware` that allows to execute one or more handlers when a specific
 message is sent over the bus.
 Since we are creating a command bus, a `message` is a **command** that specifies an action
 to execute.
 
-### Message
+### Message/Command
 
 We can use a `string`, a `class`, an `object` etc... as message. Whatever you want is fine.
 Let's say we want to create a command to sign in a user that fills a form in a client. We will create a `login-command.ts` with the following code:

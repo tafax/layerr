@@ -1,10 +1,10 @@
 
 import { throwError } from 'rxjs';
-import { EviCommandForTest } from './evi-command-for-test';
+import { EvilCommandForTest } from './evil-command-for-test';
 import { CustomError } from './custom.error';
 
 export class EvilCommandHandlerForTest {
-  handle(command: EviCommandForTest) {
+  handle(command: EvilCommandForTest) {
     command.checkProperty.should.be.eql('alright!');
     return throwError(new CustomError());
   }

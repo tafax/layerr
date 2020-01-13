@@ -1,6 +1,6 @@
 
 import { suite, test } from '@layerr/test';
-import { FunctionConstructorMessageTypeExtractor } from '../../../../../../src/public_api';
+import { FunctionConstructorMessageTypeExtractor } from '../../../../../src/public_api';
 
 //@ts-ignore
 @suite class FunctionConstructorMessageTypeExtractorUnitTests {
