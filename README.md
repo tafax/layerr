@@ -17,17 +17,25 @@ but the libraries it already contains are production ready.
 
 ## Roadmap
 
-[x] :dart: Core
+- [x] :dart: Core
 
-[x] :bus: Powerful message bus
+- [x] :bus: Powerful message bus
 
-[ ] :rocket: Fast and extensible API client
+- [ ] :rocket: Fast and extensible API client
 
-[ ] :scissors: A pluggable parser library for JSON
+- [ ] :scissors: A pluggable parser library for JSON
 
-[ ] :memo: Easy to use and configurable logger
+- [ ] :memo: Easy to use and configurable logger
 
-[ ] :boom: Lifesaver error handler with logging integration
+- [ ] :boom: Lifesaver error handler with logging integration
+
+## Components
+
+Layerr has the following components. Follow the links for the specific
+documentations.
+
+* [CoreLayerr](https://github.com/tafax/layerr/tree/master/packages/core)
+* [BusLayerr](https://github.com/tafax/layerr/tree/master/packages/bus)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

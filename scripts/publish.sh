@@ -12,5 +12,8 @@ fi
 git checkout master
 git pull --tags origin master
 
+# Compile the project.
+yarn compile
+
 # Release a new version and publish to NPM.
 yarn semantic-release
