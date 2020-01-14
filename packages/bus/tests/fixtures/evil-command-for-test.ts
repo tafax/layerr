@@ -1,4 +1,4 @@
 
-export class EviCommandForTest {
+export class EvilCommandForTest {
   checkProperty: string = 'alright!';
 }

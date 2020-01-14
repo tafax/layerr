@@ -1,6 +1,6 @@
 
 import { suite, test, should } from '@layerr/test';
-import { ConcurrentCollectionHandlerLookup } from '../../../../../../../src/public_api';
+import { ConcurrentCollectionHandlerLookup } from '../../../../../../src/public_api';
 
 class MessageTest {}
 

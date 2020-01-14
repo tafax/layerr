@@ -9,8 +9,10 @@ export { MessageBusInterface } from './bus/message-bus.interface';
 export { MessageBus } from './bus/message-bus';
 export { MessageBusMiddlewareInterface } from './bus/middleware/message-bus-middleware.interface';
 
+// Error
 export { BusError } from './errors/bus.error';
 
+// Decorator
 export { Handler } from './decorator/handler';
 
 // Lookup
@@ -27,6 +29,7 @@ export { DecoratorHandlerLookup } from './message-handler/message-mapper/handler
 // Extractor
 export { MessageTypeExtractorInterface } from './message-handler/message-mapper/extractor/message-type-extractor.interface';
 export { FunctionConstructorMessageTypeExtractor } from './message-handler/message-mapper/extractor/function-constructor.message-type-extractor';
+export { IdentityMessageTypeExtractor } from './message-handler/message-mapper/extractor/identity.message-type-extractor';
 
 // Message mapper
 export { MessageMapperInterface } from './message-handler/message-mapper/message-mapper.interface';
@@ -34,3 +37,6 @@ export { MessageMapper } from './message-handler/message-mapper/message.mapper';
 
 // Message Handler
 export { MessageHandlerMiddleware } from './message-handler/message-handler.middleware';
+
+// Factory
+export { GeneralPurposeBusFactory } from './factory/general-purpose-bus.factory';

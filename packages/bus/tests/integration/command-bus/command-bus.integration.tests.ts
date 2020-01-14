@@ -10,7 +10,7 @@ import {
   MessageHandlerMiddleware
 } from '../../..';
 import { CustomError } from '../../fixtures/custom.error';
-import { EviCommandForTest } from '../../fixtures/evi-command-for-test';
+import { EvilCommandForTest } from '../../fixtures/evil-command-for-test';
 import { EvilCommandHandlerForTest } from '../../fixtures/evil-command-handler-for-test';
 import { GoodCommandForTest } from '../../fixtures/good-command-for-test';
 import { GoodCommandHandlerForTest } from '../../fixtures/good-command-handler-for-test';
@@ -27,7 +27,7 @@ import { GoodCommandHandlerForTest } from '../../fixtures/good-command-handler-f
 
     const messageHandlingCollection = new CollectionHandlerLookup([
       { message: GoodCommandForTest, handler: GoodCommandHandlerForTest },
-      { message: EviCommandForTest, handler: EvilCommandHandlerForTest }
+      { message: EvilCommandForTest, handler: EvilCommandHandlerForTest }
     ]);
 
     const functionExtractor = new FunctionConstructorMessageTypeExtractor();
@@ -90,7 +90,7 @@ import { GoodCommandHandlerForTest } from '../../fixtures/good-command-handler-f
 
   @test 'should execute the correct command handler and throws error'() {
 
-    const command = new EviCommandForTest();
+    const command = new EvilCommandForTest();
 
     this.classResolverMock
       .setup(x => x.resolve(EvilCommandHandlerForTest))

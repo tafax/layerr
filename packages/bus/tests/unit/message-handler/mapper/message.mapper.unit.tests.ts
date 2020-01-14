@@ -1,12 +1,13 @@
 
 import { ClassResolverInterface, ClassType } from '@layerr/core';
 import { suite, test, IMock, Mock, Times, It } from '@layerr/test';
-import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } from '../../../../../src/public_api';
+import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } from '../../../../src/public_api';
 
 //@ts-ignore
 @suite class MessageMapperUnitTests {
 
   private messageMapper: MessageMapper;
+  private messageMapperNoResolver: MessageMapper;
   private messageLookupMock: IMock<HandlerLookupInterface>;
   private extractorMock: IMock<MessageTypeExtractorInterface>;
   private classResolverMock: IMock<ClassResolverInterface>;
@@ -21,6 +22,11 @@ import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } 
       this.messageLookupMock.object,
       this.extractorMock.object,
       this.classResolverMock.object
+    );
+
+    this.messageMapperNoResolver = new MessageMapper(
+      this.messageLookupMock.object,
+      this.extractorMock.object
     );
   }
 
@@ -52,14 +58,14 @@ import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } 
 
     const mappings = this.messageMapper.getHandlers(messageMock.object);
     mappings.should.have.length(1);
-    mappings[0].should.instanceof(Function);
+    mappings[0].should.be.instanceof(Function);
 
     this.extractorMock.verifyAll();
     this.messageLookupMock.verifyAll();
     this.classResolverMock.verifyAll();
   }
 
-  @test 'should return a set of callable functions'() {
+  @test 'should return a set of callable functions when the handler is an array of functions'() {
 
     const messageClassMock = Mock.ofType<ClassType<any>>();
     const messageMock = Mock.ofType<any>();
@@ -82,8 +88,34 @@ import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } 
 
     const mappings = this.messageMapper.getHandlers(messageMock.object);
     mappings.should.have.length(2);
-    mappings[0].should.instanceof(Function);
-    mappings[1].should.instanceof(Function);
+    mappings[0].should.be.instanceof(Function);
+    mappings[1].should.be.instanceof(Function);
+
+    this.extractorMock.verifyAll();
+    this.messageLookupMock.verifyAll();
+    this.classResolverMock.verifyAll();
+  }
+
+  @test 'should return a set of callable functions when the handler is a function'() {
+
+    const messageClassMock = Mock.ofType<ClassType<any>>();
+    const messageMock = Mock.ofType<any>();
+
+    const handler = () => {};
+
+    this.extractorMock
+      .setup(x => x.extract(messageMock.object))
+      .returns(() => messageClassMock.object)
+      .verifiable(Times.once());
+
+    this.messageLookupMock
+      .setup(x => x.getValue(messageClassMock.object))
+      .returns(() => handler)
+      .verifiable(Times.once());
+
+    const mappings = this.messageMapperNoResolver.getHandlers(messageMock.object);
+    mappings.should.have.length(1);
+    mappings[0].should.be.instanceof(Function);
 
     this.extractorMock.verifyAll();
     this.messageLookupMock.verifyAll();

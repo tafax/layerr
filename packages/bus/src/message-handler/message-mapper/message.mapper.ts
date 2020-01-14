@@ -14,7 +14,7 @@ export class MessageMapper implements MessageMapperInterface {
   constructor(
     private _messageLookup: HandlerLookupInterface,
     private _extractor: MessageTypeExtractorInterface,
-    private _classResolver: ClassResolverInterface,
+    private _classResolver?: ClassResolverInterface
   ) {}
 
   /**
@@ -26,8 +26,8 @@ export class MessageMapper implements MessageMapperInterface {
     // Gets the handler based on the message identifier.
     const handlerIdentifier = <ClassType<any>>this._messageLookup.getValue(identifier);
     // If we have an array we return it.
-    if (Array.isArray(handlerIdentifier)) {
-      return handlerIdentifier;
+    if (!this._classResolver || Array.isArray(handlerIdentifier)) {
+      return Array.isArray(handlerIdentifier) ? handlerIdentifier : [ handlerIdentifier ];
     }
     // Resolves the handler function.
     const handler = this._classResolver.resolve<any>(handlerIdentifier);
