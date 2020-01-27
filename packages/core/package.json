@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "The core of Layerr toolkit",
   "author": "Matteo Tafani Alunno <matteo.tafanialunno@gmail.com>",
-  "homepage": "https://github.com/tafax/layerr#readme",
+  "homepage": "https://github.com/tafax/layerr/tree/master/packages/core#readme",
   "license": "MIT",
   "module": "./dist/fesm5/core.js",
   "es2015": "./dist/fesm2015/core.js",

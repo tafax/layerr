@@ -21,7 +21,7 @@ const ENV = process.env.NODE_ENV || 'development';
 const { ifProduction } = getIfUtils(ENV);
 
 // The lib name and the entry point.
-const LIB_NAME = pkg.name.replace('@layerr', '');
+const LIB_NAME = pkg.name.replace('@layerr', '').replace('-', '_');
 const PUBLIC_API = 'public_api.js';
 
 // Sets the paths for the input and output.
@@ -57,7 +57,9 @@ const plugins = ([
 ]);
 
 const dependencies = Object.keys(pkg.dependencies) || [];
-const isDep = (moduleID) => !!dependencies.find(
+const peerDependencies = Object.keys(pkg.peerDependencies) || [];
+const allDependencies = [ ...dependencies, ...peerDependencies ];
+const isDep = (moduleID) => !!allDependencies.find(
   (value) => !!moduleID.includes(value)
 );
 
