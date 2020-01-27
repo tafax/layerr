@@ -57,7 +57,7 @@ const plugins = ([
 ]);
 
 const dependencies = Object.keys(pkg.dependencies) || [];
-const peerDependencies = Object.keys(pkg.peerDependencies) || [];
+const peerDependencies = !!pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : [];
 const allDependencies = [ ...dependencies, ...peerDependencies ];
 const isDep = (moduleID) => !!allDependencies.find(
   (value) => !!moduleID.includes(value)
