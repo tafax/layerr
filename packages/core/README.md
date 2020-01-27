@@ -1,5 +1,5 @@
 
-# CoreLayerr :dart:
+# CORE
 
 It is the core of **Layerr** toolkit. It doesn't provide specific features
 or code, but it is used by any other libraries in the toolkit.

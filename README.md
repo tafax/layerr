@@ -15,6 +15,10 @@ It can be used on both the client side and the server side without restrictions.
 Right now, Layerr is not features complete,
 but the libraries it already contains are production ready.
 
+## Documentation
+
+[Documentation](https://tafax.gitbook.io/layerr)
+
 ## Roadmap
 
 - [x] :dart: Core
@@ -23,7 +27,7 @@ but the libraries it already contains are production ready.
 
 - [ ] :rocket: Fast and extensible API client
 
-- [ ] :scissors: A pluggable parser library for JSON
+- [ ] :scissors: A parser library for JSON
 
 - [ ] :memo: Easy to use and configurable logger
 
@@ -34,8 +38,8 @@ but the libraries it already contains are production ready.
 Layerr has the following components. Follow the links for the specific
 documentations.
 
-* [CoreLayerr](https://github.com/tafax/layerr/tree/master/packages/core)
-* [BusLayerr](https://github.com/tafax/layerr/tree/master/packages/bus)
+* [CORE](https://github.com/tafax/layerr/tree/master/packages/core)
+* [BUS](https://github.com/tafax/layerr/tree/master/packages/bus)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
