@@ -1,6 +1,6 @@
 
 import { of } from 'rxjs';
-import { GoodQueryForTest } from './good-query-for-test';
+import { GoodQueryForTest } from '../good-query-for-test';
 
 export class GoodQueryHandlerForTest {
   handle(query: GoodQueryForTest) {

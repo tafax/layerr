@@ -11,9 +11,9 @@ import {
 } from '../../..';
 import { CustomError } from '../../fixtures/custom.error';
 import { EvilQueryForTest } from '../../fixtures/evil-query-for-test';
-import { EvilQueryHandlerForTest } from '../../fixtures/evil-query-handler-for-test';
+import { EvilQueryHandlerForTest } from '../../fixtures/class-handlers/evil-query-handler-for-test';
 import { GoodQueryForTest } from '../../fixtures/good-query-for-test';
-import { GoodQueryHandlerForTest } from '../../fixtures/good-query-handler-for-test';
+import { GoodQueryHandlerForTest } from '../../fixtures/class-handlers/good-query-handler-for-test';
 
 //@ts-ignore
 @suite class QueryBusIntegrationTests {
