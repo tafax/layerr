@@ -10,7 +10,7 @@ export class IdentityMessageTypeExtractor implements MessageTypeExtractorInterfa
   /**
    * @inheritDoc
    */
-  extract(message: any): Function {
+  extract(message: any): Function | string {
     return message;
   }
 

@@ -34,7 +34,7 @@
     "rollup": "rollup -c ../../compile/rollup.config.js --environment NODE_ENV:production --environment PKG:bus",
     "compile": "yarn build && yarn rollup",
     "---------------- TESTING ----------------": "",
-    "test": "nyc ../../node_modules/.bin/_mocha --opts tests/mocha.opts 'tests/**/*.tests.ts'"
+    "test": "nyc ../../node_modules/.bin/_mocha 'tests/**/*.tests.ts'"
   },
   "bugs": {
     "url": "https://github.com/tafax/layerr/issues"
