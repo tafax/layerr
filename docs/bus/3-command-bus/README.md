@@ -64,6 +64,13 @@ const collection = new CollectionHandlerLookup([
   { message: 'logout-command', handler: 'logout-handler' }
 ]);
 
+// Use string and classes to define commands and handlers.
+const collection = new CollectionHandlerLookup([ 
+  { message: 'login-command', handler: LoginCommandHandler },
+  { message: 'logout-command', handler: LogoutCommandHandler }
+]);
+
+
 // Use a functions to define handlers.
 const collection = new CollectionHandlerLookup([ 
   { 
@@ -147,7 +154,20 @@ import { FunctionConstructorMessageTypeExtractor } from '@layerr/bus';
 const extractor = new FunctionConstructorMessageTypeExtractor();
 ```
 
-If you don't use classes, but strings or numbers, you have to use 
+If you use this extract you have to define class as commands in the collection.
+
+Alternatively, you can define a public `name` property in the command and
+use a specific extractor:
+
+```TypeScript
+import { NameMessageTypeExtractor } from '@layerr/bus';
+
+const extractor = new NameMessageTypeExtractor();
+```
+
+with this one, you have to use strings as commands in the collection.
+
+If you don't use classes, but strings, you have to use 
 another extractor:
 
 ```TypeScript
@@ -155,6 +175,8 @@ import { IdentityMessageTypeExtractor } from '@layerr/bus';
 
 const extractor = new IdentityMessageTypeExtractor();
 ```
+
+and make sure to you strings as commands as well.
 
 # Allow the handler to map and resolve the command and command handler
 
