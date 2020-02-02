@@ -16,20 +16,20 @@ export { BusError } from './errors/bus.error';
 export { Handler } from './decorator/handler';
 
 // Lookup
-export { HandlerLookupInterface } from './message-handler/message-mapper/handler-lookup/handler-lookup.interface';
+export { HandlerLookupInterface } from './message-handler/handler-lookup/handler-lookup.interface';
 
 // Collections
-export { CollectionHandlerLookup } from './message-handler/message-mapper/handler-lookup/collection/collection.handler-lookup';
-export { ConcurrentCollectionHandlerLookup } from './message-handler/message-mapper/handler-lookup/collection/concurrent-collection.handler-lookup';
-export { MessageHandlerPair } from './message-handler/message-mapper/handler-lookup/collection/abstract-collection.handler-lookup';
+export { CollectionHandlerLookup } from './message-handler/handler-lookup/collection/collection.handler-lookup';
+export { ConcurrentCollectionHandlerLookup } from './message-handler/handler-lookup/collection/concurrent-collection.handler-lookup';
+export { MessageHandlerPair } from './message-handler/handler-lookup/collection/abstract-collection.handler-lookup';
 
 // Decorator
-export { DecoratorHandlerLookup } from './message-handler/message-mapper/handler-lookup/decorator/decorator.handler-lookup';
+export { DecoratorHandlerLookup } from './message-handler/handler-lookup/decorator/decorator.handler-lookup';
 
 // Extractor
-export { MessageTypeExtractorInterface } from './message-handler/message-mapper/extractor/message-type-extractor.interface';
-export { FunctionConstructorMessageTypeExtractor } from './message-handler/message-mapper/extractor/function-constructor.message-type-extractor';
-export { IdentityMessageTypeExtractor } from './message-handler/message-mapper/extractor/identity.message-type-extractor';
+export { MessageTypeExtractorInterface } from './message-handler/extractor/message-type-extractor.interface';
+export { FunctionConstructorMessageTypeExtractor } from './message-handler/extractor/function-constructor.message-type-extractor';
+export { IdentityMessageTypeExtractor } from './message-handler/extractor/identity.message-type-extractor';
 
 // Message mapper
 export { MessageMapperInterface } from './message-handler/message-mapper/message-mapper.interface';

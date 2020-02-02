@@ -1,7 +1,7 @@
 
 import { suite, test, should } from '@layerr/test';
-import { CollectionHandlerLookup } from '../../../../../../src/public_api';
-import { BusError } from '../../../../../../src/errors/bus.error';
+import { CollectionHandlerLookup } from '../../../../../src/public_api';
+import { BusError } from '../../../../../src/errors/bus.error';
 
 class MessageTest {}
 class MessageHandlerTest {}

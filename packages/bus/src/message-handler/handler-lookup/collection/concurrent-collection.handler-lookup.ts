@@ -1,5 +1,4 @@
 
-// Defines a convenience type to describe the message/handlers pair.
 import { AbstractCollectionHandlerLookup, MessageHandlerPair } from "./abstract-collection.handler-lookup";
 
 /**

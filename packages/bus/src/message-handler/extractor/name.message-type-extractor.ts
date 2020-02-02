@@ -1,11 +1,13 @@
 
 import { ClassType } from "@layerr/core";
 import { MessageTypeExtractorInterface } from './message-type-extractor.interface';
-import { BusError } from "../../../errors/bus.error";
+import { BusError } from "../../errors/bus.error";
 
 /**
- * Defines an identity extractor that can be used to
- * return
+ * Provides the ability to get the name of an object.
+ * At runtime, it calls a `name` property to retrieve this string.
+ * It is used to represent the message and allow the collection
+ * to retrieve the correct handler for it.
  */
 export class NameMessageTypeExtractor implements MessageTypeExtractorInterface {
 

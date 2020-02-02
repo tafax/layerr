@@ -4,6 +4,8 @@ import { MessageTypeExtractorInterface } from './message-type-extractor.interfac
 /**
  * Provides the ability to get the function constructor of an object.
  * At runtime, it can be considered the class of the object.
+ * It is used to represent the message and allow the collection
+ * to retrieve the correct handler for it.
  */
 export class FunctionConstructorMessageTypeExtractor implements MessageTypeExtractorInterface {
 

@@ -1,7 +1,7 @@
 
 import { suite, test } from '@layerr/test';
-import { NameMessageTypeExtractor } from "../../../../../src/message-handler/message-mapper/extractor/name.message-type-extractor";
-import {BusError} from "../../../../../src/errors/bus.error";
+import { NameMessageTypeExtractor } from "../../../../src/message-handler/extractor/name.message-type-extractor";
+import {BusError} from "../../../../src/errors/bus.error";
 
 //@ts-ignore
 @suite class NameMessageTypeExtractorUnitTests {

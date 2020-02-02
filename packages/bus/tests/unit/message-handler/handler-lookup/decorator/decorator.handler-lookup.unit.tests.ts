@@ -1,6 +1,6 @@
 
 import { suite, test, should } from '@layerr/test';
-import { DecoratorHandlerLookup, Handler } from '../../../../../../src/public_api';
+import { DecoratorHandlerLookup, Handler } from '../../../../../src/public_api';
 
 class HandlerTest {}
 

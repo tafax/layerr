@@ -1,6 +1,6 @@
 
 import { suite, test } from '@layerr/test';
-import { IdentityMessageTypeExtractor } from '../../../../../src/message-handler/message-mapper/extractor/identity.message-type-extractor';
+import { IdentityMessageTypeExtractor } from '../../../../src/message-handler/extractor/identity.message-type-extractor';
 
 //@ts-ignore
 @suite class IdentityMessageTypeExtractorUnitTests {

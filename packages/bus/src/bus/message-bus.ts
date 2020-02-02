@@ -65,7 +65,7 @@ export class MessageBus<T> implements MessageBusInterface<T> {
 
     // Executes the middlewares chain.
     execution$.subscribe(
-      () => {}, // Ignores the nexts.
+      () => {}, // Ignores the next.
       () => {} // Ignores the errors to avoid logging unexpected errors.
     );
 
