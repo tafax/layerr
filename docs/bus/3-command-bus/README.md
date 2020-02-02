@@ -48,6 +48,8 @@ Each of the provided handler can be one of the following things:
 * An array of functions.
 * A service id (string or class) which the resolver (see below) 
 can resolve to a valid object that has a method named `handle()`.
+* An array where the first item is a class to resolve against the handler
+and the second item is a custom method to call.
 
 ```TypeScript
 import { CollectionHandlerLookup } from '@layerr/bus';
@@ -91,6 +93,12 @@ const collection = new CollectionHandlerLookup([
       ...
     ]
   }
+]);
+
+// Use classes and custom method to define commands and handlers.
+const collection = new CollectionHandlerLookup([ 
+  { message: LoginCommand, handler: [ LoginCommandHandler, 'applyCommand' ] },
+  { message: LogoutCommand, handler: [ LogoutCommandHandler, 'applyCommand' ] }
 ]);
 ```
 
@@ -180,14 +188,43 @@ and make sure to you strings as commands as well.
 
 # Allow the handler to map and resolve the command and command handler
 
-Finally, the message mapper can be created by combining the previous 
+Finally, you have to create a message mapper by combining the previous 
 components. It is used by the handler middleware to resolve and get 
 the specific handler for a message (i.e. command).
+
+The `MessageMapper` is the default one. It works with any extractor,
+but it needs a resolver since the handler in the collection has to be
+something the resolver knows.
 
 ```TypeScript
 import { MessageMapper } from '@layerr/bus';
 
 const messageMapper = new MessageMapper(
+  collection,
+  extractor,
+  resolver
+);
+```
+
+Alternatively, `FunctionMessageMapper` can be used if the handler is a function
+or an array of functions. It doesn't need a resolver.
+
+```TypeScript
+import { FunctionMessageMapper } from '@layerr/bus';
+
+const messageMapper = new FunctionMessageMapper(
+  collection,
+  extractor
+);
+```
+
+Finally, `MethodMessageMapper` can be used if the handler is a function
+or an array of functions. It doesn't need a resolver.
+
+```TypeScript
+import { MethodMessageMapper } from '@layerr/bus';
+
+const messageMapper = new MethodMessageMapper(
   collection,
   extractor,
   resolver

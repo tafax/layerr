@@ -4,7 +4,7 @@ import { MessageBus } from '../../../src/bus/message-bus';
 import { GeneralPurposeBusFactory } from '../../../src/factory/general-purpose-bus.factory';
 
 //@ts-ignore
-@suite class MessageBusIntegrationTests {
+@suite class GeneralPurposeBusIntegrationTests {
 
   private messageBus: MessageBus<any>;
 

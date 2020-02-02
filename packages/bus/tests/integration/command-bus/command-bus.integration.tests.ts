@@ -14,11 +14,13 @@ import { EvilCommandForTest } from '../../fixtures/evil-command-for-test';
 import { EvilCommandClassHandlerForTest } from '../../fixtures/class-handlers/evil-command-class-handler-for-test';
 import { GoodCommandForTest } from '../../fixtures/good-command-for-test';
 import { GoodCommandClassHandlerForTest } from '../../fixtures/class-handlers/good-command-class-handler-for-test';
-import { IdentityMessageTypeExtractor } from '../../../src/message-handler/message-mapper/extractor/identity.message-type-extractor';
-import { NameMessageTypeExtractor } from '../../../src/message-handler/message-mapper/extractor/name.message-type-extractor';
+import { IdentityMessageTypeExtractor } from '../../../src/message-handler/extractor/identity.message-type-extractor';
+import { NameMessageTypeExtractor } from '../../../src/message-handler/extractor/name.message-type-extractor';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { GoodCommandStringHandlerForTest } from '../../fixtures/string-handlers/good-command-handler-for-test';
 import { EvilCommandStringHandlerForTest } from '../../fixtures/string-handlers/evil-command-handler-for-test';
+import { FunctionMessageMapper } from '../../../src/message-handler/message-mapper/function.message-mapper';
+import { MethodMessageMapper } from '../../../src/message-handler/message-mapper/method.message-mapper';
 
 //@ts-ignore
 @suite class CommandBusIntegrationTests {
@@ -27,6 +29,7 @@ import { EvilCommandStringHandlerForTest } from '../../fixtures/string-handlers/
   private identityCommandBus: MessageBus<any>;
   private nameCommandBus: MessageBus<any>;
   private functionCommandBus: MessageBus<any>;
+  private methodCommandBus: MessageBus<any>;
 
   private classResolverMock: IMock<ClassResolverInterface>;
 
@@ -66,6 +69,23 @@ import { EvilCommandStringHandlerForTest } from '../../fixtures/string-handlers/
       }
     ]);
 
+    const methodMessageHandlingCollection = new CollectionHandlerLookup([
+      {
+        message: GoodCommandForTest,
+        handler: [
+          GoodCommandClassHandlerForTest,
+          'applyCommand'
+        ]
+      },
+      {
+        message: EvilCommandForTest,
+        handler: [
+          EvilCommandClassHandlerForTest,
+          'applyCommand'
+        ]
+      }
+    ]);
+
     const functionExtractor = new FunctionConstructorMessageTypeExtractor();
     const identityExtractor = new IdentityMessageTypeExtractor();
     const nameExtractor = new NameMessageTypeExtractor();
@@ -102,9 +122,19 @@ import { EvilCommandStringHandlerForTest } from '../../fixtures/string-handlers/
 
     this.functionCommandBus = new MessageBus([
       new MessageHandlerMiddleware(
-        new MessageMapper(
+        new FunctionMessageMapper(
           functionMessageHandlingCollection,
           identityExtractor
+        )
+      )
+    ]);
+
+    this.methodCommandBus = new MessageBus([
+      new MessageHandlerMiddleware(
+        new MethodMessageMapper(
+          methodMessageHandlingCollection,
+          functionExtractor,
+          this.classResolverMock.object
         )
       )
     ]);
@@ -166,6 +196,23 @@ import { EvilCommandStringHandlerForTest } from '../../fixtures/string-handlers/
     const command = 'GoodCommandForTest';
 
     return this.functionCommandBus.handle(command).subscribe();
+  }
+
+  @test 'should execute the correct command handler - METHOD'() {
+
+    const command = new GoodCommandForTest();
+
+    this.classResolverMock
+      .setup(x => x.resolve(GoodCommandClassHandlerForTest))
+      .returns(() => new GoodCommandClassHandlerForTest())
+      .verifiable(Times.once());
+
+    return this.methodCommandBus.handle(command)
+      .subscribe(
+        () => {
+          this.classResolverMock.verifyAll();
+        }
+      );
   }
 
   @test 'should execute the correct command handler without subscribing - CLASS'() {
@@ -259,6 +306,34 @@ import { EvilCommandStringHandlerForTest } from '../../fixtures/string-handlers/
     return this.functionCommandBus.handle(command).subscribe();
   }
 
+  @test 'should execute the correct command handler without subscribing - METHOD'() {
+
+    const command = new GoodCommandForTest();
+
+    const commandHandlerMock = Mock.ofType(GoodCommandClassHandlerForTest);
+
+    commandHandlerMock
+      .setup(x => x.applyCommand(command))
+      .returns(() => of(undefined))
+      .verifiable(Times.once());
+
+    this.classResolverMock
+      .setup(x => x.resolve(GoodCommandClassHandlerForTest))
+      .returns(() => commandHandlerMock.object)
+      .verifiable(Times.once());
+
+    const execution$ = this.methodCommandBus.handle(command);
+
+    this.classResolverMock.verifyAll();
+    commandHandlerMock.verifyAll();
+
+    return execution$
+      .subscribe(() => {
+        this.classResolverMock.verifyAll();
+        commandHandlerMock.verifyAll();
+      });
+  }
+
   @test 'should execute the correct command handler and throws error - CLASS'() {
 
     const command = new EvilCommandForTest();
@@ -324,6 +399,26 @@ import { EvilCommandStringHandlerForTest } from '../../fixtures/string-handlers/
     const command = 'EvilCommandForTest';
 
     return this.functionCommandBus.handle(command)
+      .subscribe(
+        () => { throw new Error('should-not-be-called'); },
+        (error: Error) => {
+          error.should.be.instanceof(CustomError);
+
+          this.classResolverMock.verifyAll();
+        }
+      );
+  }
+
+  @test 'should execute the correct command handler and throws error - METHOD'() {
+
+    const command = new EvilCommandForTest();
+
+    this.classResolverMock
+      .setup(x => x.resolve(EvilCommandClassHandlerForTest))
+      .returns(() => new EvilCommandClassHandlerForTest())
+      .verifiable(Times.once());
+
+    return this.methodCommandBus.handle(command)
       .subscribe(
         () => { throw new Error('should-not-be-called'); },
         (error: Error) => {

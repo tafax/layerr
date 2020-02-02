@@ -1,10 +1,13 @@
 
-import { BusError } from "../../../../errors/bus.error";
+import { BusError } from "../../../errors/bus.error";
 import { HandlerLookupInterface } from '../handler-lookup.interface';
 
 // Defines a convenience type to describe the message/handler pair.
 export interface MessageHandlerPair<T = any> { message: any, handler: T }
 
+/**
+ * Defines the abstract class to handle a collection of messages and handlers.
+ */
 export abstract class AbstractCollectionHandlerLookup<T, U = T> implements HandlerLookupInterface {
 
   /**

@@ -1,13 +1,13 @@
 
 import { ClassResolverInterface, ClassType } from '@layerr/core';
-import { suite, test, IMock, Mock, Times, It } from '@layerr/test';
-import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } from '../../../../src/public_api';
+import { suite, test, IMock, Mock, Times } from '@layerr/test';
+import { MessageTypeExtractorInterface, HandlerLookupInterface, BusError } from '../../../../src/public_api';
+import { MethodMessageMapper } from '../../../../src/message-handler/message-mapper/method.message-mapper';
 
 //@ts-ignore
-@suite class MessageMapperUnitTests {
+@suite class MethodMessageMapperUnitTests {
 
-  private messageMapper: MessageMapper;
-  private messageMapperNoResolver: MessageMapper;
+  private messageMapper: MethodMessageMapper;
   private messageLookupMock: IMock<HandlerLookupInterface>;
   private extractorMock: IMock<MessageTypeExtractorInterface>;
   private classResolverMock: IMock<ClassResolverInterface>;
@@ -18,15 +18,10 @@ import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } 
     this.extractorMock = Mock.ofType<MessageTypeExtractorInterface>();
     this.classResolverMock = Mock.ofType<ClassResolverInterface>();
 
-    this.messageMapper = new MessageMapper(
+    this.messageMapper = new MethodMessageMapper(
       this.messageLookupMock.object,
       this.extractorMock.object,
       this.classResolverMock.object
-    );
-
-    this.messageMapperNoResolver = new MessageMapper(
-      this.messageLookupMock.object,
-      this.extractorMock.object
     );
   }
 
@@ -39,7 +34,7 @@ import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } 
     const handlerMock = Mock.ofType<any>();
 
     handlerMock
-      .setup(x => x.handle());
+      .setup(x => x.apply());
 
     this.extractorMock
       .setup(x => x.extract(messageMock.object))
@@ -48,7 +43,7 @@ import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } 
 
     this.messageLookupMock
       .setup(x => x.getValue(messageClassMock.object))
-      .returns(() => handlerClassMock.object)
+      .returns(() => [ handlerClassMock.object, 'apply' ])
       .verifiable(Times.once());
 
     this.classResolverMock
@@ -57,63 +52,6 @@ import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } 
       .verifiable(Times.once());
 
     const mappings = this.messageMapper.getHandlers(messageMock.object);
-    mappings.should.have.length(1);
-    mappings[0].should.be.instanceof(Function);
-
-    this.extractorMock.verifyAll();
-    this.messageLookupMock.verifyAll();
-    this.classResolverMock.verifyAll();
-  }
-
-  @test 'should return a set of callable functions when the handler is an array of functions'() {
-
-    const messageClassMock = Mock.ofType<ClassType<any>>();
-    const messageMock = Mock.ofType<any>();
-
-    const handlers = [ () => {}, () => {} ];
-
-    this.extractorMock
-      .setup(x => x.extract(messageMock.object))
-      .returns(() => messageClassMock.object)
-      .verifiable(Times.once());
-
-    this.messageLookupMock
-      .setup(x => x.getValue(messageClassMock.object))
-      .returns(() => handlers)
-      .verifiable(Times.once());
-
-    this.classResolverMock
-      .setup(x => x.resolve(It.isAny()))
-      .verifiable(Times.never());
-
-    const mappings = this.messageMapper.getHandlers(messageMock.object);
-    mappings.should.have.length(2);
-    mappings[0].should.be.instanceof(Function);
-    mappings[1].should.be.instanceof(Function);
-
-    this.extractorMock.verifyAll();
-    this.messageLookupMock.verifyAll();
-    this.classResolverMock.verifyAll();
-  }
-
-  @test 'should return a set of callable functions when the handler is a function'() {
-
-    const messageClassMock = Mock.ofType<ClassType<any>>();
-    const messageMock = Mock.ofType<any>();
-
-    const handler = () => {};
-
-    this.extractorMock
-      .setup(x => x.extract(messageMock.object))
-      .returns(() => messageClassMock.object)
-      .verifiable(Times.once());
-
-    this.messageLookupMock
-      .setup(x => x.getValue(messageClassMock.object))
-      .returns(() => handler)
-      .verifiable(Times.once());
-
-    const mappings = this.messageMapperNoResolver.getHandlers(messageMock.object);
     mappings.should.have.length(1);
     mappings[0].should.be.instanceof(Function);
 
@@ -171,7 +109,7 @@ import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } 
 
     this.messageLookupMock
       .setup(x => x.getValue(messageClassMock.object))
-      .returns(() => handlerClassMock.object)
+      .returns(() => [ handlerClassMock.object, 'apply' ])
       .verifiable(Times.once());
 
     this.classResolverMock
@@ -180,6 +118,34 @@ import { MessageMapper, MessageTypeExtractorInterface, HandlerLookupInterface } 
       .verifiable(Times.once());
 
     (() => { this.messageMapper.getHandlers(messageMock.object); }).should.throw('resolver-error');
+
+    this.extractorMock.verifyAll();
+    this.messageLookupMock.verifyAll();
+    this.classResolverMock.verifyAll();
+  }
+
+  @test 'should throw an error if the message lookup is not an array'() {
+
+    const messageClassMock = Mock.ofType<ClassType<any>>();
+    const messageMock = Mock.ofType<any>();
+
+    const handlerClassMock = Mock.ofType<any>();
+
+    this.extractorMock
+      .setup(x => x.extract(messageMock.object))
+      .returns(() => messageClassMock.object)
+      .verifiable(Times.once());
+
+    this.messageLookupMock
+      .setup(x => x.getValue(messageClassMock.object))
+      .returns(() => handlerClassMock.object)
+      .verifiable(Times.once());
+
+    this.classResolverMock
+      .setup(x => x.resolve(handlerClassMock.object))
+      .verifiable(Times.never());
+
+    (() => { this.messageMapper.getHandlers(messageMock.object); }).should.throw(BusError);
 
     this.extractorMock.verifyAll();
     this.messageLookupMock.verifyAll();

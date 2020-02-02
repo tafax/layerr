@@ -1,6 +1,4 @@
 
-
-// Defines a convenience type to describe the message/handler pair.
 import { AbstractCollectionHandlerLookup, MessageHandlerPair } from "./abstract-collection.handler-lookup";
 
 /**
@@ -13,7 +11,7 @@ export class CollectionHandlerLookup extends AbstractCollectionHandlerLookup<any
   /**
    * @inheritDoc
    */
-  protected _isHandlerBoundToPair(handler: any, pair: MessageHandlerPair<any>): boolean {
+  protected _isHandlerBoundToPair(handler: any, pair: MessageHandlerPair): boolean {
     return pair.handler === handler;
   }
 
