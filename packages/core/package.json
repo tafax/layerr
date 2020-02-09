@@ -7,13 +7,13 @@
   "license": "MIT",
   "module": "./dist/fesm5/core.js",
   "es2015": "./dist/fesm2015/core.js",
-  "esm5": "./dist/esm5/index.js",
-  "esm2015": "./dist/esm2015/index.js",
+  "esm5": "./dist/esm5/public_api.js",
+  "esm2015": "./dist/esm2015/public_api.js",
   "fesm5": "./dist/fesm5/core.js",
   "fesm2015": "./dist/fesm2015/core.js",
   "main": "./dist/bundles/core.umd.js",
-  "typings": "./dist/types/index.d.ts",
-  "types": "./dist/types/index.d.ts",
+  "typings": "./dist/types/public_api.d.ts",
+  "types": "./dist/types/public_api.d.ts",
   "sideEffects": false,
   "files": [
     "dist/"
