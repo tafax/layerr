@@ -25,24 +25,26 @@ export class MessageBus<T> implements MessageBusInterface<T> {
    */
   private _functionForNextMiddleware(index: number): (message: any) => Observable<any> {
     if (!this._middlewares[index]) {
+      //eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       return (value: any) => of(value);
     }
 
     const middleware = this._middlewares[index];
+    //eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     return (message: any) => middleware.handle(message, this._functionForNextMiddleware(index + 1));
   }
 
   /**
    * @inheritDoc
    */
-  appendMiddleware(middleware: MessageBusMiddlewareInterface) {
+  appendMiddleware(middleware: MessageBusMiddlewareInterface): void {
     this._middlewares.push(middleware);
   }
 
   /**
    * @inheritDoc
    */
-  prependMiddleware(middleware: MessageBusMiddlewareInterface) {
+  prependMiddleware(middleware: MessageBusMiddlewareInterface): void {
     this._middlewares.unshift(middleware);
   }
 
@@ -65,7 +67,9 @@ export class MessageBus<T> implements MessageBusInterface<T> {
 
     // Executes the middlewares chain.
     execution$.subscribe(
+      //eslint-disable-next-line @typescript-eslint/no-empty-function
       () => {}, // Ignores the next.
+      //eslint-disable-next-line @typescript-eslint/no-empty-function
       () => {} // Ignores the errors to avoid logging unexpected errors.
     );
 

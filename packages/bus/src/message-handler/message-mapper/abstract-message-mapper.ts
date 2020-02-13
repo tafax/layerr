@@ -24,7 +24,7 @@ export abstract class AbstractMessageMapper implements MessageMapperInterface {
     // Extracts the identifier.
     const identifier = this._extractor.extract(message);
     // Gets the handler based on the message identifier.
-    return <ClassType<any>>this._messageLookup.getValue(identifier);
+    return this._messageLookup.getValue(identifier) as ClassType<any>;
   }
 
   /**

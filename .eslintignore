@@ -1,0 +1,13 @@
+
+# Don't ever lint node_modules.
+node_modules
+
+# Don't lint build output.
+packages/**/dist
+
+# Don't lint nyc coverage output.
+coverage
+.nyc_output
+
+# Misc
+*.js

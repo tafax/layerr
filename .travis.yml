@@ -10,17 +10,18 @@ cache:
     - node_modules
 
 before_install:
- - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
- - export PATH=$HOME/.yarn/bin:$PATH
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
+  - export PATH=$HOME/.yarn/bin:$PATH
 
 install:
- - yarn
+  - yarn
 
 before_script:
- - export DISPLAY=:99.0
+  - export DISPLAY=:99.0
 
 script:
- - travis_wait 30 yarn test:ci
+  - yarn lint
+  - travis_wait 30 yarn test:ci
 
 deploy:
   provider: script

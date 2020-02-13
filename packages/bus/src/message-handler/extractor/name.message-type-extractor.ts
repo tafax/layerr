@@ -15,11 +15,11 @@ export class NameMessageTypeExtractor implements MessageTypeExtractorInterface {
    * @inheritDoc
    */
   extract(message: any): Function | string {
-    if (!(<ClassType<any>>message).name) {
+    if (!(message as ClassType<any>).name) {
       throw new BusError(`Unable to find the property 'name' in message: ${message}`);
     }
 
-    return (<ClassType<any>>message).name;
+    return (message as ClassType<any>).name;
   }
 
 }
