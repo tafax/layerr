@@ -41,7 +41,7 @@ export class CompletableListCache<T extends CacheableItem, U> extends SimpleList
    * Sets a new state for the completion checker.
    * It will be used to check if the cache can be consider complete or not.
    */
-  setState(state: U) {
+  setState(state: U): void {
     this._currentState = state;
   }
 
@@ -55,7 +55,7 @@ export class CompletableListCache<T extends CacheableItem, U> extends SimpleList
   /**
    * Pushes new item set into the cache and eventually updates the state of the cache.
    */
-  pushItems(items: T[], state?: U) {
+  pushItems(items: T[], state?: U): void {
     if (this._completionChecker.needsReset(state, this._currentState)) {
       this.clear();
     }
@@ -73,7 +73,7 @@ export class CompletableListCache<T extends CacheableItem, U> extends SimpleList
   /**
    * Resets the cache state.
    */
-  clear() {
+  clear(): void {
     this._currentState = undefined;
     super.clear();
   }

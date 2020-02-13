@@ -3,7 +3,10 @@ import { BusError } from "../../../errors/bus.error";
 import { HandlerLookupInterface } from '../handler-lookup.interface';
 
 // Defines a convenience type to describe the message/handler pair.
-export interface MessageHandlerPair<T = any> { message: any, handler: T }
+export interface MessageHandlerPair<T = any> {
+  message: any;
+  handler: T;
+}
 
 /**
  * Defines the abstract class to handle a collection of messages and handlers.
@@ -18,7 +21,7 @@ export abstract class AbstractCollectionHandlerLookup<T, U = T> implements Handl
   /**
    * Checks the duplications in the collection.
    */
-  private _checksDuplications() {
+  private _checksDuplications(): void {
     // Gets all messages.
     const messages = this._collection
       .map((pair: MessageHandlerPair) => pair.message);
@@ -52,7 +55,7 @@ export abstract class AbstractCollectionHandlerLookup<T, U = T> implements Handl
   /**
    * Sets a collection. It will override the old one.
    */
-  setCollection(collection: MessageHandlerPair<T>[]) {
+  setCollection(collection: MessageHandlerPair<T>[]): void {
     this._collection = collection;
     this._checksDuplications();
   }
@@ -77,5 +80,5 @@ export abstract class AbstractCollectionHandlerLookup<T, U = T> implements Handl
       .map((pair: MessageHandlerPair<T>) => pair.message);
 
     return messages.length > 0 ? messages[0] : undefined;
-  };
+  }
 }

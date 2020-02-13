@@ -12,7 +12,7 @@ export class IndexItemsCollection<T, P extends keyof T> {
   /**
    * The property used to index the items.
    */
-  private _property: P;
+  private readonly _property: P;
 
   constructor(property: P, items: T[] = []) {
     for (const item of items) {
@@ -42,7 +42,7 @@ export class IndexItemsCollection<T, P extends keyof T> {
   /**
    * Adds a specific item.
    */
-  add(item: T) {
+  add(item: T): void {
     this._items.set(`${item[this._property]}`, item);
   }
 
@@ -73,7 +73,7 @@ export class IndexItemsCollection<T, P extends keyof T> {
   /**
    * Clears everything.
    */
-  clear() {
+  clear(): void {
     this._items = new Map();
   }
 

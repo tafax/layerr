@@ -37,7 +37,7 @@ export class Logger implements LoggerInterface {
    * @param {LoggerArgs[]} args The arguments of the message.
    * @private
    */
-  private _write(level: LoggerLevel, message?: string, ...args: LoggerArgs[]) {
+  private _write(level: LoggerLevel, message?: string, ...args: LoggerArgs[]): void {
     if (this._globalLevel === LoggerLevel.OFF || level < this._globalLevel) {
       return;
     }
@@ -50,35 +50,35 @@ export class Logger implements LoggerInterface {
   /**
    * @inheritDoc
    */
-  log(message?: string, ...args: LoggerArgs[]) {
+  log(message?: string, ...args: LoggerArgs[]): void {
     this._write(LoggerLevel.LOG, message, ...args);
   }
 
   /**
    * @inheritDoc
    */
-  debug(message?: string, ...args: LoggerArgs[]) {
+  debug(message?: string, ...args: LoggerArgs[]): void {
     this._write(LoggerLevel.DEBUG, message, ...args);
   }
 
   /**
    * @inheritDoc
    */
-  info(message?: string, ...args: LoggerArgs[]) {
+  info(message?: string, ...args: LoggerArgs[]): void {
     this._write(LoggerLevel.INFO, message, ...args);
   }
 
   /**
    * @inheritDoc
    */
-  warn(message?: string, ...args: LoggerArgs[]) {
+  warn(message?: string, ...args: LoggerArgs[]): void {
     this._write(LoggerLevel.WARN, message, ...args);
   }
 
   /**
    * @inheritDoc
    */
-  error(message?: string, ...args: LoggerArgs[]) {
+  error(message?: string, ...args: LoggerArgs[]): void {
     this._write(LoggerLevel.ERROR, message, ...args);
   }
 

@@ -20,4 +20,4 @@ export function createOptionsDecorator<T, U extends ClassType<any>>(key: string)
       return target;
     };
   }
-};
+}

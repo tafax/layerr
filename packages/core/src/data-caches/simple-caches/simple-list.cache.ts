@@ -23,15 +23,15 @@ export class SimpleListCache<T extends CacheableItem> {
   /**
    * Normalizes the key to a string.
    */
-  private _normalizeKey(key: string | number | undefined | null): string {
-    return `key:${!!key ? key.toString() : typeof key}`;
+  private static NormalizeKey(key: string | number | undefined | null): string {
+    return `key:${key ? key.toString() : typeof key}`;
   }
 
   /**
    * Tells if the cache is handling a value with the same key.
    */
   hasKey(key: string | number): boolean {
-    return this._items.has(this._normalizeKey(key));
+    return this._items.has(SimpleListCache.NormalizeKey(key));
   }
 
   /**
@@ -52,34 +52,34 @@ export class SimpleListCache<T extends CacheableItem> {
    * Gets a specific item based on its key.
    */
   getItem(key: string | number): T {
-    return this._items.get(this._normalizeKey(key));
+    return this._items.get(SimpleListCache.NormalizeKey(key));
   }
 
   /**
    * Adds more items to the cache.
    */
-  pushItems(items: T[]) {
+  pushItems(items: T[]): void {
     items.forEach((value: T) => this.pushItem(value));
   }
 
   /**
    * Adds one item to the cache.
    */
-  pushItem(item: T) {
-    this._items.set(this._normalizeKey(item.id), item);
+  pushItem(item: T): void {
+    this._items.set(SimpleListCache.NormalizeKey(item.id), item);
   }
 
   /**
    * Deletes one item from the cache.
    */
-  deleteItem(key: string | number) {
-    this._items.delete(this._normalizeKey(key));
+  deleteItem(key: string | number): void {
+    this._items.delete(SimpleListCache.NormalizeKey(key));
   }
 
   /**
    * Removes all the cached items.
    */
-  clear() {
+  clear(): void {
     this._items = new Map();
   }
 }

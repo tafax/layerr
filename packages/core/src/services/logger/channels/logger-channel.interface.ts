@@ -1,6 +1,6 @@
 
 // Defines a set of types for the logger args.
-export declare type LoggerArgs = string | number | boolean | Object;
+export declare type LoggerArgs = string | number | boolean | Record<string, any>;
 
 /**
  * Defines a generic channel to physically write a log.

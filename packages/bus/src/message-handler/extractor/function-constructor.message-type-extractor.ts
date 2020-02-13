@@ -13,7 +13,7 @@ export class FunctionConstructorMessageTypeExtractor implements MessageTypeExtra
    * @inheritDoc
    */
   extract(message: any): Function | string {
-    return (message as Object).constructor;
+    return (message as Record<string, any>).constructor;
   }
 
 }
