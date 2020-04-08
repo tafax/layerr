@@ -45,6 +45,7 @@
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-terser": "^5.0.0",
     "rollup-plugin-uglify": "^6.0.2",
+    "rxjs": "~6.5.5",
     "semantic-release": "15.9.x",
     "semantic-release-monorepo": "^6.1.1",
     "shx": "^0.3.2",
