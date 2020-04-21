@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "declarationDir": "./dist/types",
-    "outDir": "./dist/esm5"
+    "outDir": "./dist/esm5",
+    "strict": true
   },
   "exclude": [
     "node_modules"

@@ -3,6 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "module": "commonjs",
+    "lib": [
+      "dom",
+      "es2015"
+    ],
     "typeRoots" : [
       "./node_modules/@types"
     ]
