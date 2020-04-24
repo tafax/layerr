@@ -8,7 +8,7 @@ import { RemoteResponse } from '../response/remote-response';
  * Defines the interface for each object that handles
  * a specific action request.
  */
-export interface RemoteCallHandlerInterface {
+export interface RequestHandlerInterface {
 
   /**
    * Handles a specific remote call.
