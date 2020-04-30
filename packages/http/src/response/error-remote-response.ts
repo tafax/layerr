@@ -24,7 +24,7 @@ export class ErrorRemoteResponse<T> extends RemoteResponse<T> implements Error {
 
   constructor(
     message: string,
-    error: any | null,
+    error: Error | null,
     body: T | null,
     headers: HttpHeaders,
     status: number,
