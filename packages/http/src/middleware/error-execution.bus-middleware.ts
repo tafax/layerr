@@ -3,8 +3,8 @@ import { MessageBusMiddlewareInterface } from '@layerr/bus';
 import { LoggerInterface } from '@layerr/core';
 import { Observable, TimeoutError, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { HttpBusError } from '../error/http-bus.error';
-import { HttpBusErrorType } from '../error/http-bus.error-type';
+import { HttpLayerrError } from '../error/http-layerr.error';
+import { HttpLayerrErrorType } from '../error/http-layerr.error-type';
 import { HttpExecution } from '../http-execution';
 import { ErrorRemoteResponse } from '../response/error-remote-response';
 
@@ -29,9 +29,9 @@ export class ErrorExecutionBusMiddleware implements MessageBusMiddlewareInterfac
 
           if (error instanceof TimeoutError) {
             this._logger.error(`TimeoutError: ${error.message} - RemoteCall: ${message.request.path}`);
-            rethrownError = new HttpBusError(
+            rethrownError = new HttpLayerrError(
               error.message,
-              HttpBusErrorType.TIMEOUT,
+              HttpLayerrErrorType.TIMEOUT,
               -1,
               'Timeout',
               message.request,
@@ -46,9 +46,9 @@ export class ErrorExecutionBusMiddleware implements MessageBusMiddlewareInterfac
 
             if (isUnknown) {
               this._logger.error(`Unknown error: ${error.message} - RemoteCall: ${message.request.path}`);
-              rethrownError = new HttpBusError(
+              rethrownError = new HttpLayerrError(
                 `No status code - Unknown error [ ${error.statusText} - ${error.message} ]`,
-                HttpBusErrorType.UNKNOWN,
+                HttpLayerrErrorType.UNKNOWN,
                 0,
                 error.statusText,
                 message.request,
@@ -60,23 +60,23 @@ export class ErrorExecutionBusMiddleware implements MessageBusMiddlewareInterfac
               let type;
               switch (error.status) {
                 case 400:
-                  type = HttpBusErrorType.MALFORMED;
+                  type = HttpLayerrErrorType.MALFORMED;
                   break;
                 case 401:
-                  type = HttpBusErrorType.UNAUTHENTICATED;
+                  type = HttpLayerrErrorType.UNAUTHENTICATED;
                   break;
                 case 403:
-                  type = HttpBusErrorType.FORBIDDEN;
+                  type = HttpLayerrErrorType.FORBIDDEN;
                   break;
                 case 404:
-                  type = HttpBusErrorType.NOT_FOUND;
+                  type = HttpLayerrErrorType.NOT_FOUND;
                   break;
                 default:
-                  type = HttpBusErrorType.UNEXPECTED;
+                  type = HttpLayerrErrorType.UNEXPECTED;
               }
 
               this._logger.error(`Error: ${error.status} ${error.statusText} ${error.message} - RemoteCall: ${message.request.path}`);
-              rethrownError = new HttpBusError(
+              rethrownError = new HttpLayerrError(
                 `${error.statusText ? error.statusText : 'Generic error'} - ${error.message}`,
                 type,
                 error.status,

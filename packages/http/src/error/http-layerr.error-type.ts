@@ -1,5 +1,5 @@
 
-export enum HttpBusErrorType {
+export enum HttpLayerrErrorType {
   UNKNOWN,
   INTERNAL,
   TIMEOUT,

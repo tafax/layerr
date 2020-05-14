@@ -2,16 +2,16 @@
 /* istanbul ignore file */
 
 import { RequestInterface } from '../request/request.interface';
-import { HttpBusErrorType } from './http-bus.error-type';
+import { HttpLayerrErrorType } from './http-layerr.error-type';
 
 /**
  * Basic error thrown when an error occurs.
  */
-export class HttpBusError extends Error {
+export class HttpLayerrError extends Error {
 
   constructor(
     _message: string,
-    private _type: HttpBusErrorType,
+    private _type: HttpLayerrErrorType,
     private _status: number | null,
     private _statusText: string | null,
     private _request: RequestInterface | null,
@@ -21,13 +21,13 @@ export class HttpBusError extends Error {
     super(_message);
 
     // Set the prototype explicitly.
-    Object.setPrototypeOf(this, HttpBusError.prototype);
+    Object.setPrototypeOf(this, HttpLayerrError.prototype);
   }
 
   /**
    * Gets the type of the error.
    */
-  get type(): HttpBusErrorType {
+  get type(): HttpLayerrErrorType {
     return this._type;
   }
 

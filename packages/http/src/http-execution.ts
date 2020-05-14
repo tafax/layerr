@@ -19,11 +19,6 @@ export class HttpExecution {
   response!: RemoteResponse<JsonType>;
 
   /**
-   * The final result of the execution.
-   */
-  result: any;
-
-  /**
    * The base host if we want to override it.
    */
   baseHost!: string;
@@ -31,7 +26,7 @@ export class HttpExecution {
   /**
    * The retry attempt if we want to override it.
    */
-  retryAttemptCount: number | undefined;
+  retryAttemptCount!: number | null;
 
   /**
    * The retry delay if we want to override it.
