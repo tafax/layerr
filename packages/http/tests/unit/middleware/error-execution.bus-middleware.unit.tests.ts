@@ -3,8 +3,8 @@ import { LoggerInterface } from '@layerr/core';
 import { suite, test, IMock, Mock, Times, should } from '@layerr/test';
 import { Observable, throwError, TimeoutError } from 'rxjs';
 import { RequestInterface, HttpHeaders } from '../../..';
-import { HttpBusError } from '../../../src/error/http-bus.error';
-import { HttpBusErrorType } from '../../../src/error/http-bus.error-type';
+import { HttpLayerrError } from '../../../src/error/http-layerr.error';
+import { HttpLayerrErrorType } from '../../../src/error/http-layerr.error-type';
 import { HttpExecution } from '../../../src/http-execution';
 import { ErrorExecutionBusMiddleware } from '../../../src/middleware/error-execution.bus-middleware';
 import { ErrorRemoteResponse } from '../../../src/response/error-remote-response';
@@ -39,11 +39,11 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
     )
       .subscribe(
         () => { throw new Error('it-should-never-called'); },
-        (error: HttpBusError) => {
-          error.should.be.instanceof(HttpBusError);
+        (error: HttpLayerrError) => {
+          error.should.be.instanceof(HttpLayerrError);
 
           error.message.should.be.eql(timeoutError.message);
-          error.type.should.be.eql(HttpBusErrorType.TIMEOUT);
+          error.type.should.be.eql(HttpLayerrErrorType.TIMEOUT);
           error.status.should.be.eql(-1);
           error.statusText.should.be.eql('Timeout');
           error.request.should.be.eql(execution.request);
@@ -82,11 +82,11 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       )
       .subscribe(
         () => { throw new Error('it-should-never-called'); },
-        (error: HttpBusError) => {
-          error.should.be.instanceof(HttpBusError);
+        (error: HttpLayerrError) => {
+          error.should.be.instanceof(HttpLayerrError);
 
           error.message.should.be.eql(`400 - ${errorRemoteResponse.message}`);
-          error.type.should.be.eql(HttpBusErrorType.MALFORMED);
+          error.type.should.be.eql(HttpLayerrErrorType.MALFORMED);
           error.status.should.be.eql(errorRemoteResponse.status);
           error.statusText.should.be.eql(errorRemoteResponse.statusText);
           error.request.should.be.eql(execution.request);
@@ -127,11 +127,11 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       )
       .subscribe(
         () => { throw new Error('it-should-never-called'); },
-        (error: HttpBusError) => {
-          error.should.be.instanceof(HttpBusError);
+        (error: HttpLayerrError) => {
+          error.should.be.instanceof(HttpLayerrError);
 
           error.message.should.be.eql(`401 - ${errorRemoteResponse.message}`);
-          error.type.should.be.eql(HttpBusErrorType.UNAUTHENTICATED);
+          error.type.should.be.eql(HttpLayerrErrorType.UNAUTHENTICATED);
           error.status.should.be.eql(errorRemoteResponse.status);
           error.statusText.should.be.eql(errorRemoteResponse.statusText);
           error.request.should.be.eql(execution.request);
@@ -172,11 +172,11 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       )
       .subscribe(
         () => { throw new Error('it-should-never-called'); },
-        (error: HttpBusError) => {
-          error.should.be.instanceof(HttpBusError);
+        (error: HttpLayerrError) => {
+          error.should.be.instanceof(HttpLayerrError);
 
           error.message.should.be.eql(`403 - ${errorRemoteResponse.message}`);
-          error.type.should.be.eql(HttpBusErrorType.FORBIDDEN);
+          error.type.should.be.eql(HttpLayerrErrorType.FORBIDDEN);
           error.status.should.be.eql(errorRemoteResponse.status);
           error.statusText.should.be.eql(errorRemoteResponse.statusText);
           error.request.should.be.eql(execution.request);
@@ -217,11 +217,11 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       )
       .subscribe(
         () => { throw new Error('it-should-never-called'); },
-        (error: HttpBusError) => {
-          error.should.be.instanceof(HttpBusError);
+        (error: HttpLayerrError) => {
+          error.should.be.instanceof(HttpLayerrError);
 
           error.message.should.be.eql(`404 - ${errorRemoteResponse.message}`);
-          error.type.should.be.eql(HttpBusErrorType.NOT_FOUND);
+          error.type.should.be.eql(HttpLayerrErrorType.NOT_FOUND);
           error.status.should.be.eql(errorRemoteResponse.status);
           error.statusText.should.be.eql(errorRemoteResponse.statusText);
           error.request.should.be.eql(execution.request);
@@ -262,11 +262,11 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       )
       .subscribe(
         () => { throw new Error('it-should-never-called'); },
-        (error: HttpBusError) => {
-          error.should.be.instanceof(HttpBusError);
+        (error: HttpLayerrError) => {
+          error.should.be.instanceof(HttpLayerrError);
 
           error.message.should.be.eql(`Generic error - ${errorRemoteResponse.message}`);
-          error.type.should.be.eql(HttpBusErrorType.UNEXPECTED);
+          error.type.should.be.eql(HttpLayerrErrorType.UNEXPECTED);
           error.status.should.be.eql(errorRemoteResponse.status);
           should.not.exist(error.statusText);
           error.request.should.be.eql(execution.request);
@@ -307,11 +307,11 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       )
       .subscribe(
         () => { throw new Error('it-should-never-called'); },
-        (error: HttpBusError) => {
-          error.should.be.instanceof(HttpBusError);
+        (error: HttpLayerrError) => {
+          error.should.be.instanceof(HttpLayerrError);
 
           error.message.should.be.eql(`No status code - Unknown error [ 0 - ${errorRemoteResponse.message} ]`);
-          error.type.should.be.eql(HttpBusErrorType.UNKNOWN);
+          error.type.should.be.eql(HttpLayerrErrorType.UNKNOWN);
           error.status.should.be.eql(errorRemoteResponse.status);
           error.statusText.should.be.eql(errorRemoteResponse.statusText);
           error.request.should.be.eql(execution.request);
