@@ -35,7 +35,7 @@ export class HttpHeaders implements Headers {
    * @inheritDoc
    */
   get(name: string): string | null {
-    return this._map.get(name);
+    return this._map.get(name) || null;
   }
 
   /**
