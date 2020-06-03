@@ -2,7 +2,7 @@
 # HTTP
 
 **HttpLayer** is a library to create a request bus layer in your application. You can use
-to create an HTTP client with a powerful and easy to extend way. \
+to create an easy-to-extend and powerful HTTP client. \
 It is also completely configurable using middlewares.
 
 It uses [RxJS](https://github.com/ReactiveX/RxJS) as internal engine. If you are not

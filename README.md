@@ -25,7 +25,7 @@ but the libraries it already contains are production ready.
 
 - [x] :bus: Powerful message bus
 
-- [ ] :rocket: Fast and extensible API client
+- [x] :rocket: Fast and extensible API client
 
 - [ ] :scissors: A parser library for JSON
 
@@ -40,6 +40,7 @@ documentations.
 
 * [CORE](https://github.com/tafax/layerr/tree/master/packages/core)
 * [BUS](https://github.com/tafax/layerr/tree/master/packages/bus)
+* [HTTP](https://github.com/tafax/layerr/tree/master/packages/http)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
