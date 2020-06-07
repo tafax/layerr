@@ -24,6 +24,7 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
     const remoteCallMock = {} as unknown as RequestInterface;
 
     const execution = new HttpExecution();
+    execution.baseHost = 'baseHost';
     execution.request = remoteCallMock;
     execution.retryAttemptCount = 0;
 
@@ -36,7 +37,7 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
     );
 
     this.adapterMock
-      .setup(x => x.execute(remoteCallMock))
+      .setup(x => x.execute('baseHost', remoteCallMock))
       .returns(() => of(response))
       .verifiable(Times.once());
 
@@ -60,6 +61,7 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
     const remoteCallMock = {} as unknown as RequestInterface;
 
     const execution = new HttpExecution();
+    execution.baseHost = 'baseHost';
     execution.request = remoteCallMock;
     execution.retryAttemptCount = 0;
 
@@ -74,7 +76,7 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
     );
 
     this.adapterMock
-      .setup(x => x.execute(remoteCallMock))
+      .setup(x => x.execute('baseHost', remoteCallMock))
       .returns(() => throwError(errorRemoteResponse))
       .verifiable(Times.once());
 
