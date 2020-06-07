@@ -1,5 +1,6 @@
 
-import { suite, test } from '@layerr/test';
+
+import { suite, test, should } from '@layerr/test';
 import { HttpHeaders } from '../../../src/utilities/http-headers';
 
 @suite class HttpHeadersUnitTests {
@@ -41,6 +42,64 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
       },
       this
     );
+  }
+
+  @test 'should return null if the key is not defined'() {
+    should.not.exist(this.headers.get('some'));
+  }
+
+  @test 'should convert the headers into a json object'() {
+    this.headers.append('name1', 'value1');
+    this.headers.append('name2', 'value2');
+    this.headers.append('name3', 'value3');
+    this.headers.toObject().should.be.eql({
+      name1: 'value1',
+      name2: 'value2',
+      name3: 'value3',
+    });
+  }
+
+  @test 'should create a filled header'() {
+
+    const stringHeaders = [
+      [ 'name1', 'value1' ],
+      [ 'name2', 'value2' ],
+      [ 'name3', 'value3' ]
+    ];
+
+    const newHttpHeaders = new HttpHeaders();
+    newHttpHeaders.append('name1', 'value1');
+    newHttpHeaders.append('name2', 'value2');
+    newHttpHeaders.append('name3', 'value3');
+
+    const recordsHeaders = {
+      name1: 'value1',
+      name2: 'value2',
+      name3: 'value3',
+    };
+
+    const httpStringHeaders = new HttpHeaders(stringHeaders);
+    const httpHttpHeaders = new HttpHeaders(newHttpHeaders);
+    const httpRecordsHeaders = new HttpHeaders(recordsHeaders);
+
+    httpStringHeaders.toObject().should.be.eql({
+      name1: 'value1',
+      name2: 'value2',
+      name3: 'value3',
+    });
+
+    httpHttpHeaders.toObject().should.be.eql({
+      name1: 'value1',
+      name2: 'value2',
+      name3: 'value3',
+    });
+
+    httpRecordsHeaders.toObject().should.be.eql({
+      name1: 'value1',
+      name2: 'value2',
+      name3: 'value3',
+    });
+
   }
 
 }

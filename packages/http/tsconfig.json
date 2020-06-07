@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "declarationDir": "./dist/types",
     "outDir": "./dist/esm5",
-    "strict": true
+    "strict": true,
+    "downlevelIteration": true
   },
   "exclude": [
     "node_modules"
