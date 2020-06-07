@@ -12,6 +12,6 @@ export interface HttpAdapterInterface {
   /**
    * Executes the call using the specific adapter.
    */
-  execute<T>(remoteCall: RequestInterface): Observable<RemoteResponse<T>>;
+  execute<T>(baseHost: string, remoteCall: RequestInterface): Observable<RemoteResponse<T>>;
 
 }

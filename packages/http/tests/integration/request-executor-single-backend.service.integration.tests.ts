@@ -77,7 +77,7 @@ import { TestRestfulRequest } from '../fixtures/test.restful-request';
       .verifiable(Times.once());
 
     this.httpAdapterMock
-      .setup(x => x.execute(It.isAny()))
+      .setup(x => x.execute('baseHost', request))
       .returns(() => of(remoteResponse))
       .verifiable(Times.once());
 
@@ -111,7 +111,7 @@ import { TestRestfulRequest } from '../fixtures/test.restful-request';
       .verifiable(Times.once());
 
     this.httpAdapterMock
-      .setup(x => x.execute(It.isAny()))
+      .setup(x => x.execute('baseHost', request))
       .returns(() => throwError(errorRemoteResponse))
       .verifiable(Times.once());
 

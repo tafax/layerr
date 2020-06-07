@@ -18,7 +18,7 @@ export class RequestExecutionBusMiddleware implements MessageBusMiddlewareInterf
    */
   handle(message: HttpExecution, next: (message: HttpExecution) => Observable<any>): Observable<any> {
     // Starts by streaming the request.
-    let request$ = this._httpAdapter.execute<JsonType>(message.request);
+    let request$ = this._httpAdapter.execute<JsonType>(message.baseHost, message.request);
 
     // TODO: Find a way to test it as unit.
     /* istanbul ignore if */
