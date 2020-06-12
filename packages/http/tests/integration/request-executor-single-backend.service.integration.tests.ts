@@ -1,5 +1,5 @@
 
-import { suite, test, IMock, Mock, Times, It } from '@layerr/test';
+import { suite, test, IMock, Mock, Times } from '@layerr/test';
 import {
   CollectionHandlerLookup,
   FunctionConstructorMessageTypeExtractor,
@@ -18,8 +18,8 @@ import { RequestHandlerBusMiddleware } from '../../src/middleware/request-handle
 import { ErrorRemoteResponse } from '../../src/response/error-remote-response';
 import { RemoteResponse } from '../../src/response/remote-response';
 import { RequestExecutor } from '../../src/service/request-executor';
-import { TestRestfulRequestHandler } from '../fixtures/test-restful.request-handler';
-import { TestRestfulRequest } from '../fixtures/test.restful-request';
+import { TestRequest } from '../fixtures/test.request';
+import { TestRequestHandler } from '../fixtures/test.request-handler';
 
 @suite class RequestExecutorIntegrationTests {
 
@@ -35,7 +35,7 @@ import { TestRestfulRequest } from '../fixtures/test.restful-request';
     this.loggerMock = Mock.ofType<LoggerInterface>();
 
     const collection = new CollectionHandlerLookup([
-      { message: TestRestfulRequest, handler: TestRestfulRequestHandler }
+      { message: TestRequest, handler: TestRequestHandler }
     ]);
     const extractor = new FunctionConstructorMessageTypeExtractor();
 
@@ -62,7 +62,7 @@ import { TestRestfulRequest } from '../fixtures/test.restful-request';
 
   @test 'should return the remote response'() {
 
-    const request = new TestRestfulRequest('path', 'v1');
+    const request = new TestRequest({ path: 'path', version: 'v1' });
     const remoteResponse = new RemoteResponse(
       {},
         new HttpHeaders(),
@@ -72,8 +72,8 @@ import { TestRestfulRequest } from '../fixtures/test.restful-request';
       );
 
     this.classResolverMock
-      .setup(x => x.resolve(TestRestfulRequestHandler))
-      .returns(() => new TestRestfulRequestHandler())
+      .setup(x => x.resolve(TestRequestHandler))
+      .returns(() => new TestRequestHandler())
       .verifiable(Times.once());
 
     this.httpAdapterMock
@@ -94,7 +94,7 @@ import { TestRestfulRequest } from '../fixtures/test.restful-request';
 
   @test 'should return the error remote response'() {
 
-    const request = new TestRestfulRequest('path', 'v1');
+    const request = new TestRequest({ path: 'path', version: 'v1' });
     const errorRemoteResponse = new ErrorRemoteResponse(
       'error',
       new Error(),
@@ -106,8 +106,8 @@ import { TestRestfulRequest } from '../fixtures/test.restful-request';
     );
 
     this.classResolverMock
-      .setup(x => x.resolve(TestRestfulRequestHandler))
-      .returns(() => new TestRestfulRequestHandler())
+      .setup(x => x.resolve(TestRequestHandler))
+      .returns(() => new TestRequestHandler())
       .verifiable(Times.once());
 
     this.httpAdapterMock
