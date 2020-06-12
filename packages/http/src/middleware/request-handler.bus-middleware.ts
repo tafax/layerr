@@ -1,10 +1,8 @@
-
 import { MessageMapperInterface, MessageBusMiddlewareInterface } from '@layerr/bus';
 import { Observable } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
+import { HttpLayerrError, HttpLayerrErrorType } from '../..';
 import { HttpExecution } from '../http-execution';
-import { RemoteResponse } from '../response/remote-response';
-import { JsonType } from '@layerr/core';
 
 /**
  * Defines the middleware to execute an handler for a given request.
@@ -18,7 +16,19 @@ export class RequestHandlerBusMiddleware implements MessageBusMiddlewareInterfac
   /**
    * @inheritDoc
    */
-  handle(message: HttpExecution, next: (message: HttpExecution) => Observable<any>): Observable<any> {
+  handle<T>(message: HttpExecution<T>, next: (message: HttpExecution<T>) => Observable<any>): Observable<any> {
+
+    if (!message.hasResponse()) {
+      throw new HttpLayerrError(
+        `We expect a response at this point!`,
+        HttpLayerrErrorType.INTERNAL,
+        null,
+        null,
+        message.request.clone(),
+        null,
+        null
+      );
+    }
 
     // Gets the handler if any.
     const handlers = this._messageHandlerMapper.getHandlers(message.request);
@@ -30,10 +40,7 @@ export class RequestHandlerBusMiddleware implements MessageBusMiddlewareInterfac
 
     return handlers[0](message.request, message.response)
       .pipe(
-        concatMap((response: RemoteResponse<JsonType>) => {
-          message.response = response;
-          return next(message);
-        })
+        concatMap((content: T) => next(message.clone({ content })))
       );
 
   }

@@ -13,6 +13,6 @@ export interface RequestHandlerInterface {
   /**
    * Handles a specific remote call.
    */
-  handle(remoteCall: RequestInterface, response: RemoteResponse<JsonType>): Observable<RemoteResponse<JsonType>>;
+  handle(remoteCall: RequestInterface, response: RemoteResponse<JsonType>): Observable<any>;
 
 }

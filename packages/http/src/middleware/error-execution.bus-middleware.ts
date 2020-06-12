@@ -20,7 +20,7 @@ export class ErrorExecutionBusMiddleware implements MessageBusMiddlewareInterfac
   /**
    * @inheritDoc
    */
-  handle(message: HttpExecution, next: (message: HttpExecution) => Observable<any>): Observable<any> {
+  handle<T>(message: HttpExecution<T>, next: (message: HttpExecution<T>) => Observable<any>): Observable<any> {
     return next(message)
       .pipe(
         catchError((error: Error) => {

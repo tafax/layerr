@@ -4,24 +4,13 @@ import { HttpHeaders } from '../utilities/http-headers';
 import { HttpMethod } from '../utilities/http-method';
 import { HttpParams } from '../utilities/http-params';
 import { HttpResponseContent } from '../utilities/http-response-content';
-import { CloneableInterface, RequestUpdate } from './cloneable.interface';
 import { RequestInterface } from './request.interface';
-
-export interface RequestInit {
-  path: string;
-  version: string | null;
-  method?: HttpMethod;
-  withCredentials?: boolean;
-  responseType?: HttpResponseContent;
-  headers?: HttpHeaders;
-  query?: HttpParams;
-}
 
 /**
  * Defines the abstract base request. It provides a common object that should be extended
  * when we need to create a request.
  */
-export abstract class AbstractRequest implements RequestInterface, CloneableInterface {
+export abstract class AbstractRequest implements RequestInterface {
 
   /**
    * The path of the request.
@@ -58,7 +47,15 @@ export abstract class AbstractRequest implements RequestInterface, CloneableInte
    */
   readonly responseType: HttpResponseContent = HttpResponseContent.JSON;
 
-  constructor(init: RequestInit) {
+  constructor(init: {
+    path: string;
+    version: string | null;
+    method?: HttpMethod;
+    withCredentials?: boolean;
+    responseType?: HttpResponseContent;
+    headers?: HttpHeaders;
+    query?: HttpParams;
+  }) {
     this._path = init.path;
     this._version = init.version;
     this.method = init.method || HttpMethod.GET;
@@ -109,7 +106,13 @@ export abstract class AbstractRequest implements RequestInterface, CloneableInte
   /**
    * @inheritDoc
    */
-  clone(update?: RequestUpdate): RequestInterface & CloneableInterface {
+  clone(update?: {
+    method?: HttpMethod;
+    withCredentials?: boolean;
+    responseType?: HttpResponseContent;
+    headers?: HttpHeaders;
+    query?: HttpParams;
+  }): RequestInterface {
     if (!update) {
       return Reflect.construct(this.constructor, [ {
         path: this._path,

@@ -1,7 +1,7 @@
 
 import { MessageBusMiddlewareInterface } from '@layerr/bus';
 import { Observable, of, throwError } from 'rxjs';
-import { flatMap, retryWhen, concatMap, delay, timeout, tap } from 'rxjs/operators';
+import { flatMap, retryWhen, concatMap, delay, timeout } from 'rxjs/operators';
 import { HttpAdapterInterface } from '../adapter/http-adapter.interface';
 import { HttpExecution } from '../http-execution';
 import { RemoteResponse } from '../response/remote-response';
@@ -16,12 +16,12 @@ export class RequestExecutionBusMiddleware implements MessageBusMiddlewareInterf
   /**
    * @inheritDoc
    */
-  handle(message: HttpExecution, next: (message: HttpExecution) => Observable<any>): Observable<any> {
+  handle<T>(message: HttpExecution<T>, next: (message: HttpExecution<T>) => Observable<any>): Observable<any> {
     // Starts by streaming the request.
-    let request$ = this._httpAdapter.execute<JsonType>(message.baseHost, message.request);
+    let request$ = this._httpAdapter.execute<JsonType>(message.baseHost, message.request.clone());
 
     // TODO: Find a way to test it as unit.
-    /* istanbul ignore if */
+    /* istanbul ignore next */
     if (Number.isFinite(message.retryAttemptCount!) && message.retryAttemptCount! > 0) {
       request$ = request$
         .pipe(
@@ -44,7 +44,7 @@ export class RequestExecutionBusMiddleware implements MessageBusMiddlewareInterf
 
     // TODO: Find a way to test it as unit.
     // Sets the timeout if needed.
-    /* istanbul ignore if */
+    /* istanbul ignore next */
     if (message.timeout > 0) {
       request$ = request$
         .pipe(
@@ -55,8 +55,7 @@ export class RequestExecutionBusMiddleware implements MessageBusMiddlewareInterf
     // Otherwise, simply returns the stream.
     return request$
       .pipe(
-        tap((response) => message.response = response),
-        flatMap(() => next(message))
+        flatMap((response: RemoteResponse<JsonType>) => next(message.clone({ response })))
       );
   }
 

@@ -42,20 +42,20 @@ import { TestRequestHandler } from '../fixtures/test.request-handler';
     const classMapHandler = new MessageMapper(collection, extractor, this.classResolverMock.object);
 
     const errorExecutionBusMiddleware = new ErrorExecutionBusMiddleware(this.loggerMock.object);
-    const requestHandlerBusMiddleware = new RequestHandlerBusMiddleware(classMapHandler);
     const requestExecutionBusMiddleware = new RequestExecutionBusMiddleware(this.httpAdapterMock.object);
+    const requestHandlerBusMiddleware = new RequestHandlerBusMiddleware(classMapHandler);
 
     const messageBus = new MessageBus([
       errorExecutionBusMiddleware,
+      requestExecutionBusMiddleware,
       requestHandlerBusMiddleware,
-      requestExecutionBusMiddleware
     ]);
 
     this.requestExecutor = new RequestExecutor(
       'baseHost',
       null,
       0,
-      60,
+      0,
       messageBus
     );
   }
@@ -108,7 +108,7 @@ import { TestRequestHandler } from '../fixtures/test.request-handler';
     this.classResolverMock
       .setup(x => x.resolve(TestRequestHandler))
       .returns(() => new TestRequestHandler())
-      .verifiable(Times.once());
+      .verifiable(Times.never());
 
     this.httpAdapterMock
       .setup(x => x.execute('baseHost', request))
