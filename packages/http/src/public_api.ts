@@ -23,7 +23,7 @@ export { PaginatedResult } from './pagination/paginated-result';
 export { PaginationInterface } from './pagination/pagination.interface';
 
 // Requests
-export { AbstractRequest, RequestInit } from './request/abstract.request';
+export { AbstractRequest } from './request/abstract.request';
 export { RequestInterface } from './request/request.interface';
 
 // Request handler

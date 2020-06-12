@@ -1,5 +1,5 @@
 
-import { suite, test, Mock, IMock, Times } from '@layerr/test';
+import { suite, test, Mock, IMock, Times, It, should } from '@layerr/test';
 import { of, throwError } from 'rxjs';
 import { HttpAdapterInterface } from '../../../src/adapter/http-adapter.interface';
 import { HttpExecution } from '../../../src/http-execution';
@@ -21,12 +21,19 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
 
   @test 'should call the adapter with the execution - no timeout, not retry'() {
 
-    const remoteCallMock = {} as unknown as RequestInterface;
+    const requestMock = Mock.ofType<RequestInterface>();
+    requestMock
+      .setup(x => x.clone(It.isAny()))
+      .returns(() => requestMock.object)
+      .verifiable(Times.once());
 
-    const execution = new HttpExecution();
-    execution.baseHost = 'baseHost';
-    execution.request = remoteCallMock;
-    execution.retryAttemptCount = 0;
+    const execution = new HttpExecution<any>({
+      request: requestMock.object,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     const response = new RemoteResponse(
       null,
@@ -37,7 +44,10 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
     );
 
     this.adapterMock
-      .setup(x => x.execute('baseHost', remoteCallMock))
+      .setup(x => x.execute('baseHost', It.is((request: RequestInterface) => {
+        should.equal(request, requestMock.object);
+        return true;
+      })))
       .returns(() => of(response))
       .verifiable(Times.once());
 
@@ -48,7 +58,7 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
       nextMock
     )
       .subscribe(
-        (message: HttpExecution) => {
+        (message: HttpExecution<any>) => {
           message.response.should.be.eql(response);
 
           this.adapterMock.verifyAll();
@@ -58,12 +68,19 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
 
   @test 'should throw an error response - no timeout, not retry'() {
 
-    const remoteCallMock = {} as unknown as RequestInterface;
+    const requestMock = Mock.ofType<RequestInterface>();
+    requestMock
+      .setup(x => x.clone(It.isAny()))
+      .returns(() => requestMock.object)
+      .verifiable(Times.once());
 
-    const execution = new HttpExecution();
-    execution.baseHost = 'baseHost';
-    execution.request = remoteCallMock;
-    execution.retryAttemptCount = 0;
+    const execution = new HttpExecution<any>({
+      request: requestMock.object,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     const errorRemoteResponse = new ErrorRemoteResponse(
       'message',
@@ -76,7 +93,10 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
     );
 
     this.adapterMock
-      .setup(x => x.execute('baseHost', remoteCallMock))
+      .setup(x => x.execute('baseHost', It.is((request: RequestInterface) => {
+        should.equal(request, requestMock.object);
+        return true;
+      })))
       .returns(() => throwError(errorRemoteResponse))
       .verifiable(Times.once());
 

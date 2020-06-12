@@ -21,13 +21,18 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
 
   @test 'should create an error for the timeout'() {
 
-    const execution = new HttpExecution();
-    execution.request = {} as unknown as RequestInterface;
+    const execution = new HttpExecution<any>({
+      request: {} as unknown as RequestInterface,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     const timeoutError = new TimeoutError();
     timeoutError.message = 'timeout';
 
-    const nextMock = Mock.ofType<(message: HttpExecution) => Observable<any>>();
+    const nextMock = Mock.ofType<(message: HttpExecution<any>) => Observable<any>>();
     nextMock
       .setup(x => x(execution))
       .returns(() => throwError(timeoutError))
@@ -55,8 +60,13 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
 
   @test 'should create an error for the error status 400'() {
 
-    const execution = new HttpExecution();
-    execution.request = {} as unknown as RequestInterface;
+    const execution = new HttpExecution<any>({
+      request: {} as unknown as RequestInterface,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     const baseError = new Error();
 
@@ -70,7 +80,7 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       'url'
     );
 
-    const nextMock = Mock.ofType<(message: HttpExecution) => Observable<any>>();
+    const nextMock = Mock.ofType<(message: HttpExecution<any>) => Observable<any>>();
     nextMock
       .setup(x => x(execution))
       .returns(() => throwError(errorRemoteResponse))
@@ -100,8 +110,13 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
 
   @test 'should create an error for the error status 401'() {
 
-    const execution = new HttpExecution();
-    execution.request = {} as unknown as RequestInterface;
+    const execution = new HttpExecution<any>({
+      request: {} as unknown as RequestInterface,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     const baseError = new Error();
 
@@ -115,7 +130,7 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       'url'
     );
 
-    const nextMock = Mock.ofType<(message: HttpExecution) => Observable<any>>();
+    const nextMock = Mock.ofType<(message: HttpExecution<any>) => Observable<any>>();
     nextMock
       .setup(x => x(execution))
       .returns(() => throwError(errorRemoteResponse))
@@ -145,8 +160,13 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
 
   @test 'should create an error for the error status 403'() {
 
-    const execution = new HttpExecution();
-    execution.request = {} as unknown as RequestInterface;
+    const execution = new HttpExecution<any>({
+      request: {} as unknown as RequestInterface,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     const baseError = new Error();
 
@@ -160,7 +180,7 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       'url'
     );
 
-    const nextMock = Mock.ofType<(message: HttpExecution) => Observable<any>>();
+    const nextMock = Mock.ofType<(message: HttpExecution<any>) => Observable<any>>();
     nextMock
       .setup(x => x(execution))
       .returns(() => throwError(errorRemoteResponse))
@@ -190,8 +210,13 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
 
   @test 'should create an error for the error status 404'() {
 
-    const execution = new HttpExecution();
-    execution.request = {} as unknown as RequestInterface;
+    const execution = new HttpExecution<any>({
+      request: {} as unknown as RequestInterface,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     const baseError = new Error();
 
@@ -205,7 +230,7 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       'url'
     );
 
-    const nextMock = Mock.ofType<(message: HttpExecution) => Observable<any>>();
+    const nextMock = Mock.ofType<(message: HttpExecution<any>) => Observable<any>>();
     nextMock
       .setup(x => x(execution))
       .returns(() => throwError(errorRemoteResponse))
@@ -235,8 +260,13 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
 
   @test 'should create an error for the error status 500'() {
 
-    const execution = new HttpExecution();
-    execution.request = {} as unknown as RequestInterface;
+    const execution = new HttpExecution<any>({
+      request: {} as unknown as RequestInterface,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     const baseError = new Error();
 
@@ -250,7 +280,7 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       'url'
     );
 
-    const nextMock = Mock.ofType<(message: HttpExecution) => Observable<any>>();
+    const nextMock = Mock.ofType<(message: HttpExecution<any>) => Observable<any>>();
     nextMock
       .setup(x => x(execution))
       .returns(() => throwError(errorRemoteResponse))
@@ -280,8 +310,13 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
 
   @test 'should create an error for the error status 0'() {
 
-    const execution = new HttpExecution();
-    execution.request = {} as unknown as RequestInterface;
+    const execution = new HttpExecution<any>({
+      request: {} as unknown as RequestInterface,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     const baseError = new Error();
 
@@ -295,7 +330,7 @@ import { ErrorRemoteResponse } from '../../../src/response/error-remote-response
       'url'
     );
 
-    const nextMock = Mock.ofType<(message: HttpExecution) => Observable<any>>();
+    const nextMock = Mock.ofType<(message: HttpExecution<any>) => Observable<any>>();
     nextMock
       .setup(x => x(execution))
       .returns(() => throwError(errorRemoteResponse))

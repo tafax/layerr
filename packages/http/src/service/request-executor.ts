@@ -1,11 +1,9 @@
 
 import { MessageBus } from '@layerr/bus';
-import { JsonType } from '@layerr/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpExecution } from '../http-execution';
 import { RequestInterface } from '../request/request.interface';
-import { RemoteResponse } from '../response/remote-response';
 
 /**
  * Defines a request executor to translate a request
@@ -16,7 +14,7 @@ export class RequestExecutor {
   /**
    * The message bus to use to process an execution.
    */
-  private _messageBus: MessageBus<HttpExecution>
+  private _messageBus: MessageBus<HttpExecution<any>>
 
   /**
    * The base host if we want to override it.
@@ -43,7 +41,7 @@ export class RequestExecutor {
     retryAttemptCount: number | null,
     retryDelay: number,
     timeout: number,
-    messageBus: MessageBus<HttpExecution>
+    messageBus: MessageBus<HttpExecution<any>>
   ) {
     this._baseHost = baseHost;
     this._retryAttemptCount = retryAttemptCount;
@@ -55,17 +53,20 @@ export class RequestExecutor {
   /**
    * Executes a request and provides a remote response.
    */
-  execute(request: RequestInterface): Observable<RemoteResponse<JsonType>> {
-    const execution = new HttpExecution();
-    execution.request = request;
-    execution.baseHost = this._baseHost;
-    execution.retryAttemptCount = this._retryAttemptCount;
-    execution.retryDelay = this._retryDelay;
-    execution.timeout = this._timeout;
+  execute<T>(request: RequestInterface): Observable<T | undefined> {
 
-    return this._messageBus.handle<HttpExecution>(execution)
+    // Creates the execution object to send to the bus.
+    const execution = new HttpExecution<T>({
+      request: request.clone(),
+      baseHost: this._baseHost,
+      retryAttemptCount: this._retryAttemptCount,
+      retryDelay: this._retryDelay,
+      timeout: this._timeout
+    });
+
+    return this._messageBus.handle<HttpExecution<T>>(execution)
       .pipe(
-        map((execution: HttpExecution) => execution.response)
+        map((execution: HttpExecution<T>) => execution.content)
       );
   }
 
