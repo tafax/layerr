@@ -1,20 +1,18 @@
 
 import { MessageBus } from '@layerr/bus';
-import { JsonType } from '@layerr/core';
-import { suite, test, IMock, Mock, It } from '@layerr/test';
+import { suite, test, IMock, Mock, It, Times, should } from '@layerr/test';
 import { of } from 'rxjs';
 import { RequestInterface } from '../../..';
 import { HttpExecution } from '../../../src/http-execution';
-import { RemoteResponse } from '../../../src/response/remote-response';
 import { RequestExecutor } from '../../../src/service/request-executor';
 
 @suite class RequestExecutorUnitTests {
 
   private requestExecutor: RequestExecutor;
-  private messageBusMock: IMock<MessageBus<HttpExecution>>;
+  private messageBusMock: IMock<MessageBus<HttpExecution<any>>>;
 
   before() {
-    this.messageBusMock = Mock.ofType<MessageBus<HttpExecution>>();
+    this.messageBusMock = Mock.ofType<MessageBus<HttpExecution<any>>>();
 
     this.requestExecutor = new RequestExecutor(
       'baseHost',
@@ -26,27 +24,33 @@ import { RequestExecutor } from '../../../src/service/request-executor';
   }
 
   @test 'should execute a request'() {
-    const request = <RequestInterface>{};
 
-    const remoteResponse = <RemoteResponse<JsonType>>{};
+    const requestMock = Mock.ofType<RequestInterface>();
+    requestMock
+      .setup(x => x.clone(It.isAny()))
+      .returns(() => requestMock.object)
+      .verifiable(Times.once());
 
     this.messageBusMock
-      .setup(x => x.handle(It.is((execution: HttpExecution) => {
+      .setup(x => x.handle(It.is((execution: HttpExecution<any>) => {
         execution.baseHost.should.be.eql('baseHost');
         execution.retryAttemptCount.should.be.eql(0);
         execution.retryDelay.should.be.eql(0);
         execution.timeout.should.be.eql(0);
-        execution.request.should.be.eql(request);
+        should.equal(execution.request, requestMock.object);
 
         return true;
       })))
-      .callback(action => action.response = remoteResponse)
+      .callback(action => {
+        action.content = {};
+      })
       .returns(execution => of(execution))
 
-    return this.requestExecutor.execute(request)
+    return this.requestExecutor.execute(requestMock.object)
       .subscribe(
-        (response) => {
-          response.should.be.eql(remoteResponse);
+        (response: any) => {
+
+          response.should.be.eql({});
 
           this.messageBusMock.verifyAll();
         }

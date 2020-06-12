@@ -43,7 +43,7 @@ export class HttpBackendBusMiddleware<T extends string | number> implements Mess
   /**
    * @inheritDoc
    */
-  handle(message: HttpExecution, next: (message: HttpExecution) => Observable<any>): Observable<any> {
+  handle<T>(message: HttpExecution<T>, next: (message: HttpExecution<T>) => Observable<any>): Observable<any> {
 
     // Gets the identifier based on the request object.
     const identifier = this._extractor.extract(message.request);
@@ -79,9 +79,7 @@ export class HttpBackendBusMiddleware<T extends string | number> implements Mess
     }
 
     // Converts it to a string to make sure it can be used as base host.
-    message.baseHost = `${baseHost}`;
-
-    return next(message);
+    return next(message.clone({ baseHost: `${baseHost}` }));
   }
 
 }

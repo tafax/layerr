@@ -33,8 +33,13 @@ import { TestRequest } from '../../fixtures/test.request';
 
   @test 'should resolve the correct base host'(done) {
 
-    const execution = new HttpExecution();
-    execution.request = {} as RequestInterface;
+    const execution = new HttpExecution<any>({
+      request: {} as unknown as RequestInterface,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     this.extractorMock
       .setup(x => x.extract(execution.request))
@@ -46,11 +51,11 @@ import { TestRequest } from '../../fixtures/test.request';
       .returns(() => 'ADMIN')
       .verifiable(Times.once());
 
-    const next = (message: HttpExecution) => of(message);
+    const next = (message: HttpExecution<any>) => of(message);
 
     return this.middleware.handle(execution, next)
       .subscribe(
-        (message: HttpExecution) => {
+        (message: HttpExecution<any>) => {
 
           message.baseHost.should.be.eql('api.admin');
 
@@ -64,8 +69,13 @@ import { TestRequest } from '../../fixtures/test.request';
 
   @test 'should throw an exception if the backend key is not defined'(done) {
 
-    const execution = new HttpExecution();
-    execution.request = {} as RequestInterface;
+    const execution = new HttpExecution<any>({
+      request: {} as unknown as RequestInterface,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     this.extractorMock
       .setup(x => x.extract(execution.request))
@@ -77,7 +87,7 @@ import { TestRequest } from '../../fixtures/test.request';
       .returns(() => 'NOT_DEFINED')
       .verifiable(Times.once());
 
-    const next = (message: HttpExecution) => of(message);
+    const next = (message: HttpExecution<any>) => of(message);
 
     return this.middleware.handle(execution, next)
       .subscribe(
@@ -103,8 +113,13 @@ import { TestRequest } from '../../fixtures/test.request';
 
   @test 'should throw an exception if the base host is not defined'(done) {
 
-    const execution = new HttpExecution();
-    execution.request = {} as RequestInterface;
+    const execution = new HttpExecution<any>({
+      request: {} as unknown as RequestInterface,
+      baseHost: 'baseHost',
+      retryDelay: 200,
+      retryAttemptCount: null,
+      timeout: 6000
+    });
 
     this.extractorMock
       .setup(x => x.extract(execution.request))
@@ -116,7 +131,7 @@ import { TestRequest } from '../../fixtures/test.request';
       .returns(() => 'NULL')
       .verifiable(Times.once());
 
-    const next = (message: HttpExecution) => of(message);
+    const next = (message: HttpExecution<any>) => of(message);
 
     return this.middleware.handle(execution, next)
       .subscribe(
