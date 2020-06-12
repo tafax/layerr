@@ -8,7 +8,7 @@ import { HttpLayerrErrorType } from '../../../src/error/http-layerr.error-type';
 import { HttpExecution } from '../../../src/http-execution';
 import { HttpBackendDecoratorResolver } from '../../../src/middleware/http-backend/decorator/http-backend.decorator-resolver';
 import { HttpBackendBusMiddleware } from '../../../src/middleware/http-backend/http-backend.bus-middleware';
-import { TestRestfulRequest } from '../../fixtures/test.restful-request';
+import { TestRequest } from '../../fixtures/test.request';
 
 @suite class HttpBackendBusMiddlewareUnitTests {
 
@@ -38,11 +38,11 @@ import { TestRestfulRequest } from '../../fixtures/test.restful-request';
 
     this.extractorMock
       .setup(x => x.extract(execution.request))
-      .returns(() => TestRestfulRequest)
+      .returns(() => TestRequest)
       .verifiable(Times.once());
 
     this.resolverMock
-      .setup(x => x.getValue(TestRestfulRequest))
+      .setup(x => x.getValue(TestRequest))
       .returns(() => 'ADMIN')
       .verifiable(Times.once());
 
@@ -69,11 +69,11 @@ import { TestRestfulRequest } from '../../fixtures/test.restful-request';
 
     this.extractorMock
       .setup(x => x.extract(execution.request))
-      .returns(() => TestRestfulRequest)
+      .returns(() => TestRequest)
       .verifiable(Times.once());
 
     this.resolverMock
-      .setup(x => x.getValue(TestRestfulRequest))
+      .setup(x => x.getValue(TestRequest))
       .returns(() => 'NOT_DEFINED')
       .verifiable(Times.once());
 
@@ -108,11 +108,11 @@ import { TestRestfulRequest } from '../../fixtures/test.restful-request';
 
     this.extractorMock
       .setup(x => x.extract(execution.request))
-      .returns(() => TestRestfulRequest)
+      .returns(() => TestRequest)
       .verifiable(Times.once());
 
     this.resolverMock
-      .setup(x => x.getValue(TestRestfulRequest))
+      .setup(x => x.getValue(TestRequest))
       .returns(() => 'NULL')
       .verifiable(Times.once());
 

@@ -1,4 +1,10 @@
 
+interface HttpParamsUpdate {
+  name: string;
+  value?: string;
+  op: 'w' | 'd';
+}
+
 /**
  * Defines the HTTP params class.
  */
@@ -9,19 +15,45 @@ export class HttpParams implements URLSearchParams {
    */
   private _map: Map<string, string> = new Map();
 
-  /**
-   * @inheritDoc
-   */
-  append(name: string, value: string): void {
-    // Right now, we just support a single value for a key.
-    this._map.set(name, value);
+  constructor(headers?: HttpParams | string[][] | Record<string, string>) {
+
+    this._map = new Map();
+
+    if (!headers) {
+      return;
+    }
+
+    if (Array.isArray(headers)) {
+      this._map = new Map(headers as unknown as readonly [ string, string ][]);
+      return;
+    }
+
+    if (headers instanceof HttpParams) {
+      headers.forEach(
+        (value: string, key: string) => this._map.set(key, value)
+      );
+      return;
+    }
+
+    const headersInit = headers as Record<string, string>;
+    Object.keys(headersInit).forEach((key: string) => this._map.set(key, (headersInit[key])));
   }
 
   /**
    * @inheritDoc
    */
-  delete(name: string): void {
-    this._map.delete(name);
+  append(name: string, value: string): HttpParams {
+    return this.clone({ name, value, op: 'w' });
+  }
+
+  /**
+   * @inheritDoc
+   */
+  delete(name: string): HttpParams {
+    if (!this.has(name)) {
+      return this;
+    }
+    return this.clone({ name, op: 'd' });
   }
 
   /**
@@ -51,12 +83,12 @@ export class HttpParams implements URLSearchParams {
   /**
    * @inheritDoc
    */
-  set(name: string, value: string): void {
+  set(name: string, value: string): HttpParams {
     // We don't set undefined values.
     if (!value) {
-      return;
+      return this;
     }
-    this._map.set(name, value);
+    return this.clone({ name, value, op: 'w' });
   }
 
   /**
@@ -91,6 +123,45 @@ export class HttpParams implements URLSearchParams {
     return Array.from(this._map.keys())
       .map((key: string) => encodeURIComponent(key) + '=' + encodeURIComponent(this._map.get(key)!))
       .join('&');
+  }
+
+  /**
+   * Converts the headers into a JSON object.
+   */
+  toObject(): Record<string, string> {
+    let obj = {};
+    for (const key of Array.from(this._map.keys())) {
+      obj = {
+        ...obj,
+        [key]: this._map.get(key)
+      };
+    }
+    return obj;
+  }
+
+  /**
+   * Clones the headers.
+   */
+  clone(update?: HttpParamsUpdate): HttpParams {
+    if (!update) {
+      return new HttpParams(this);
+    }
+
+    if (update.op === 'd') {
+      const object = this.toObject();
+      let toCreate = {};
+      for (const key of Object.keys(object)) {
+        if (key === update.name) {
+          continue;
+        }
+        toCreate = Object.assign(toCreate, { [key]: update.value });
+      }
+      return new HttpParams(toCreate);
+    }
+    return new HttpParams({
+      ...this.toObject(),
+      [update.name]: update.value!
+    });
   }
 
 }

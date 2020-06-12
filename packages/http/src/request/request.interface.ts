@@ -52,4 +52,15 @@ export interface RequestInterface {
    * The body of the request.
    */
   getBody(): JsonType | null;
+
+  /**
+   * Clones the current request.
+   */
+  clone(update?: {
+    method?: HttpMethod;
+    withCredentials?: boolean;
+    responseType?: HttpResponseContent;
+    headers?: HttpHeaders;
+    query?: HttpParams;
+  }): RequestInterface;
 }

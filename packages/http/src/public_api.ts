@@ -23,7 +23,7 @@ export { PaginatedResult } from './pagination/paginated-result';
 export { PaginationInterface } from './pagination/pagination.interface';
 
 // Requests
-export { AbstractRestfulRequest } from './request/abstract-restful.request';
+export { AbstractRequest, RequestInit } from './request/abstract.request';
 export { RequestInterface } from './request/request.interface';
 
 // Request handler
@@ -41,3 +41,6 @@ export { HttpHeaders } from './utilities/http-headers';
 export { HttpMethod } from './utilities/http-method';
 export { HttpParams } from './utilities/http-params';
 export { HttpResponseContent } from './utilities/http-response-content';
+
+// Misc
+export { HttpExecution } from './http-execution';

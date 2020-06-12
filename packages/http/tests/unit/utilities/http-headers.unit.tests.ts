@@ -11,26 +11,43 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
     this.headers = new HttpHeaders();
   }
 
+  @test 'should clone'() {
+    const headers = this.headers.append('name', 'value');
+    headers.get('name').should.be.eql('value');
+
+    const cloned = headers.clone();
+    cloned.get('name').should.be.eql('value');
+  }
+
   @test 'should append a new value'() {
-    this.headers.append('name', 'value');
-    this.headers.get('name').should.be.eql('value');
+    const headers = this.headers.append('name', 'value');
+    headers.get('name').should.be.eql('value');
+    should.not.exist(this.headers.get('name'));
   }
 
   @test 'should set a new value'() {
-    this.headers.set('name', 'value');
-    this.headers.get('name').should.be.eql('value');
+    const headers = this.headers.set('name', 'value');
+    headers.get('name').should.be.eql('value');
+    should.not.exist(this.headers.get('name'));
   }
 
   @test 'should has a value'() {
-    this.headers.set('name', 'value');
-    this.headers.has('name').should.be.true;
+    const headers = this.headers.set('name', 'value');
+    headers.has('name').should.be.true;
+    this.headers.has('name').should.be.false;
   }
 
   @test 'should delete a value'() {
-    this.headers.set('name', 'value');
-    this.headers.has('name').should.be.true;
-    this.headers.delete('name');
+    let headers = this.headers.set('name', 'value');
+    headers = headers.set('name1', 'value');
+    headers.has('name').should.be.true;
+    headers.has('name1').should.be.true;
     this.headers.has('name').should.be.false;
+
+    let headers2 = headers.delete('name');
+    headers2 = headers2.delete('name2');
+    headers2.has('name').should.be.false;
+    headers2.has('name1').should.be.true;
   }
 
   @test 'should allow to call the forEach'() {
@@ -49,10 +66,10 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
   }
 
   @test 'should convert the headers into a json object'() {
-    this.headers.append('name1', 'value1');
-    this.headers.append('name2', 'value2');
-    this.headers.append('name3', 'value3');
-    this.headers.toObject().should.be.eql({
+    let headers = this.headers.append('name1', 'value1');
+    headers = headers.append('name2', 'value2');
+    headers = headers.append('name3', 'value3');
+    headers.toObject().should.be.eql({
       name1: 'value1',
       name2: 'value2',
       name3: 'value3',
@@ -68,9 +85,9 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
     ];
 
     const newHttpHeaders = new HttpHeaders();
-    newHttpHeaders.append('name1', 'value1');
-    newHttpHeaders.append('name2', 'value2');
-    newHttpHeaders.append('name3', 'value3');
+    let headers = newHttpHeaders.append('name1', 'value1');
+    headers = headers.append('name2', 'value2');
+    headers = headers.append('name3', 'value3');
 
     const recordsHeaders = {
       name1: 'value1',
@@ -79,7 +96,7 @@ import { HttpHeaders } from '../../../src/utilities/http-headers';
     };
 
     const httpStringHeaders = new HttpHeaders(stringHeaders);
-    const httpHttpHeaders = new HttpHeaders(newHttpHeaders);
+    const httpHttpHeaders = new HttpHeaders(headers);
     const httpRecordsHeaders = new HttpHeaders(recordsHeaders);
 
     httpStringHeaders.toObject().should.be.eql({
