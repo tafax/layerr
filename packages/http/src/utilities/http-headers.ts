@@ -1,4 +1,10 @@
 
+interface HttpHeadersUpdate {
+  name: string;
+  value?: string;
+  op: 'w' | 'd';
+}
+
 /**
  * Defines the HTTP headers class.
  */
@@ -36,16 +42,15 @@ export class HttpHeaders implements Headers {
   /**
    * @inheritDoc
    */
-  append(name: string, value: string): void {
-    // TODO: Implements a real append.
-    this._map.set(name, value);
+  append(name: string, value: string): HttpHeaders {
+    return this.clone({ name, value, op: 'w' });
   }
 
   /**
    * @inheritDoc
    */
-  delete(name: string): void {
-    this._map.delete(name);
+  delete(name: string): HttpHeaders {
+    return this.clone({ name, op: 'd' });
   }
 
   /**
@@ -65,8 +70,8 @@ export class HttpHeaders implements Headers {
   /**
    * @inheritDoc
    */
-  set(name: string, value: string): void {
-    this._map.set(name, value);
+  set(name: string, value: string): HttpHeaders {
+    return this.clone({ name, value, op: 'w' });
   }
 
   /**
@@ -91,6 +96,31 @@ export class HttpHeaders implements Headers {
       };
     }
     return obj;
+  }
+
+  /**
+   * Clones the headers.
+   */
+  clone(update?: HttpHeadersUpdate): HttpHeaders {
+    if (!update) {
+      return new HttpHeaders(this);
+    }
+
+    if (update.op === 'd') {
+      const object = this.toObject();
+      let toCreate = {};
+      for (const key of Object.keys(object)) {
+        if (key === update.name) {
+          continue;
+        }
+        toCreate = Object.assign(toCreate, { [key]: update.value });
+      }
+      return new HttpHeaders(toCreate);
+    }
+    return new HttpHeaders({
+      ...this.toObject(),
+      [update.name]: update.value!
+    });
   }
 
 }
