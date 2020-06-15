@@ -55,6 +55,10 @@ import { TestRequest } from '../../fixtures/test.request';
     clonedRequest.path.should.be.eql(this.requestWithVersion.path);
     clonedRequest.version.should.be.eql(this.requestWithVersion.version);
 
+    const clonedRequestNoVersion = this.requestNoVersion.clone();
+    clonedRequestNoVersion.getHeaders().should.be.eql(new HttpHeaders({ header: 'header' }));
+    clonedRequestNoVersion.getQuery().should.be.eql(new HttpParams({ query: 'query' }));
+
     let headers = this.requestWithVersion.getHeaders();
     headers = headers.append('name', 'value');
     const headersRequest = this.requestWithVersion.clone({ headers });

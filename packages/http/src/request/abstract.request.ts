@@ -121,9 +121,9 @@ export abstract class AbstractRequest implements RequestInterface {
 
     // Clones the object.
     const clone = Object.create(this);
-
-    clone['_headers'] = update ? new HttpHeaders(update.headers || this.getHeaders()) : new HttpHeaders();
-    clone['_query'] = update ? new HttpParams(update.query || this.getQuery()) : new HttpParams();
+    
+    clone['_headers'] = update ? new HttpHeaders(update.headers || this.getHeaders()) : this.getHeaders();
+    clone['_query'] = update ? new HttpParams(update.query || this.getQuery()) : this.getQuery();
 
     return clone;
   }
