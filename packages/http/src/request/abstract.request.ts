@@ -1,16 +1,35 @@
 
 import { JsonType } from '@layerr/core';
-import { HttpHeaders } from '../utilities/http-headers';
+import { HttpHeaders, HttpHeadersInit } from '../utilities/http-headers';
 import { HttpMethod } from '../utilities/http-method';
-import { HttpParams } from '../utilities/http-params';
+import { HttpParams, HttpParamsInit } from '../utilities/http-params';
 import { HttpResponseContent } from '../utilities/http-response-content';
 import { RequestInterface } from './request.interface';
+
+/**
+ * Defines the basic type of the request updates.
+ */
+export interface RequestUpdate {
+  method?: HttpMethod;
+  withCredentials?: boolean;
+  responseType?: HttpResponseContent;
+  headers?: HttpHeadersInit;
+  query?: HttpParamsInit;
+}
+
+/**
+ * Defines the basic type for the request initialization.
+ */
+export declare type RequestInit = RequestUpdate & {
+  path: string;
+  version: string | null;
+}
 
 /**
  * Defines the abstract base request. It provides a common object that should be extended
  * when we need to create a request.
  */
-export abstract class AbstractRequest<T> implements RequestInterface {
+export abstract class AbstractRequest implements RequestInterface {
 
   /**
    * The path of the request.
@@ -33,11 +52,6 @@ export abstract class AbstractRequest<T> implements RequestInterface {
   private _query: HttpParams = new HttpParams();
 
   /**
-   * The body of the request.
-   */
-  private _body?: T;
-
-  /**
    * @inheritDoc
    */
   readonly method: HttpMethod = HttpMethod.GET;
@@ -52,24 +66,14 @@ export abstract class AbstractRequest<T> implements RequestInterface {
    */
   readonly responseType: HttpResponseContent = HttpResponseContent.JSON;
 
-  constructor(init: {
-    path: string;
-    version: string | null;
-    method?: HttpMethod;
-    withCredentials?: boolean;
-    responseType?: HttpResponseContent;
-    headers?: HttpHeaders;
-    query?: HttpParams;
-    body?: T;
-  }) {
+  constructor(init: RequestInit) {
     this._path = init.path;
     this._version = init.version;
     this.method = init.method || HttpMethod.GET;
     this.withCredentials = init.withCredentials || false;
     this.responseType = init.responseType || HttpResponseContent.JSON;
-    this._headers = init.headers || new HttpHeaders();
-    this._query = init.query || new HttpParams();
-    this._body = init.body || undefined;
+    this._headers = init.headers ? new HttpHeaders(init.headers) : new HttpHeaders();
+    this._query = init.query ? new HttpParams(init.query) : new HttpParams();
   }
 
   /**
@@ -100,50 +104,27 @@ export abstract class AbstractRequest<T> implements RequestInterface {
    * @inheritDoc
    */
   getQuery(): HttpParams {
-    return this._query;
+    return this._query.clone();
   }
 
   /**
    * @inheritDoc
    */
   getBody(): JsonType | null {
-    // This ensures a pure object body.
-    return this._body ? JSON.parse(JSON.stringify(this._body)) : null;
+    return null;
   }
 
   /**
    * @inheritDoc
    */
-  clone(update?: {
-    method?: HttpMethod;
-    withCredentials?: boolean;
-    responseType?: HttpResponseContent;
-    headers?: HttpHeaders;
-    query?: HttpParams;
-    body?: T;
-  }): RequestInterface {
-    if (!update) {
-      return Reflect.construct(this.constructor, [ {
-        path: this._path,
-        version: this._version,
-        method: this.method,
-        withCredentials: this.withCredentials,
-        responseType: this.responseType,
-        headers: this._headers,
-        query: this._query,
-        body: this._body
-      } ]);
-    }
+  clone(update?: RequestUpdate): RequestInterface {
 
-    return Reflect.construct(this.constructor, [ {
-      path: this._path,
-      version: this._version,
-      method: update.method || this.method,
-      withCredentials: update.withCredentials || this.withCredentials,
-      responseType: update.responseType || this.responseType,
-      headers: update.headers || this._headers,
-      query: update.query || this._query,
-      body: update.body || this._body
-    } ]);
+    // Clones the object.
+    const clone = Object.create(this);
+
+    clone['_headers'] = update ? new HttpHeaders(update.headers || this.getHeaders()) : new HttpHeaders();
+    clone['_query'] = update ? new HttpParams(update.query || this.getQuery()) : new HttpParams();
+
+    return clone;
   }
 }
