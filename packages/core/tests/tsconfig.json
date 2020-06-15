@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "isolatedModules": false,
+    "strict": false,
+    "noUnusedLocals": false,
+    "paths": {
+      "@layerr/test": [
+        "../../../tests/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "../node_modules"
+  ],
+  "include": [
+    "./**/*.ts"
+  ]
+}
