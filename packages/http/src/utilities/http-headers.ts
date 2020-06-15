@@ -1,4 +1,7 @@
 
+// Defines the http headers init type.
+export declare type HttpHeadersInit = HttpHeaders | string[][] | Record<string, string>;
+
 interface HttpHeadersUpdate {
   name: string;
   value?: string;
@@ -15,7 +18,7 @@ export class HttpHeaders implements Headers {
    */
   private _map: Map<string, string>;
 
-  constructor(headers?: HttpHeaders | string[][] | Record<string, string>) {
+  constructor(headers?: HttpHeadersInit) {
 
     this._map = new Map();
 

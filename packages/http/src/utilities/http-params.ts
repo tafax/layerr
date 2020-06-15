@@ -1,4 +1,7 @@
 
+// Defines the http params init type.
+export declare type HttpParamsInit = HttpParams | string[][] | Record<string, string>;
+
 interface HttpParamsUpdate {
   name: string;
   value?: string;
@@ -15,27 +18,27 @@ export class HttpParams implements URLSearchParams {
    */
   private _map: Map<string, string> = new Map();
 
-  constructor(headers?: HttpParams | string[][] | Record<string, string>) {
+  constructor(params?: HttpParamsInit) {
 
     this._map = new Map();
 
-    if (!headers) {
+    if (!params) {
       return;
     }
 
-    if (Array.isArray(headers)) {
-      this._map = new Map(headers as unknown as readonly [ string, string ][]);
+    if (Array.isArray(params)) {
+      this._map = new Map(params as unknown as readonly [ string, string ][]);
       return;
     }
 
-    if (headers instanceof HttpParams) {
-      headers.forEach(
+    if (params instanceof HttpParams) {
+      params.forEach(
         (value: string, key: string) => this._map.set(key, value)
       );
       return;
     }
 
-    const headersInit = headers as Record<string, string>;
+    const headersInit = params as Record<string, string>;
     Object.keys(headersInit).forEach((key: string) => this._map.set(key, (headersInit[key])));
   }
 

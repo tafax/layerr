@@ -1,5 +1,5 @@
 
-import { suite, test, IMock, Mock, Times } from '@layerr/test';
+import { suite, test, IMock, Mock, Times, It } from '@layerr/test';
 import {
   CollectionHandlerLookup,
   FunctionConstructorMessageTypeExtractor,
@@ -21,7 +21,7 @@ import { HttpHeaders } from '../../src/utilities/http-headers';
 import { TestRequest } from '../fixtures/test.request';
 import { TestRequestHandler } from '../fixtures/test.request-handler';
 
-@suite class RequestExecutorIntegrationTests {
+@suite class RequestExecutorSingleBackendServiceIntegrationTests {
 
   private requestExecutor: RequestExecutor;
   private classResolverMock: IMock<ClassResolverInterface>;
@@ -77,7 +77,13 @@ import { TestRequestHandler } from '../fixtures/test.request-handler';
       .verifiable(Times.once());
 
     this.httpAdapterMock
-      .setup(x => x.execute('baseHost', request))
+      .setup(x => x.execute(
+        'baseHost',
+        It.is((param: TestRequest) => {
+          param.should.be.eql(request);
+          return true;
+        })
+      ))
       .returns(() => of(remoteResponse))
       .verifiable(Times.once());
 
@@ -111,7 +117,13 @@ import { TestRequestHandler } from '../fixtures/test.request-handler';
       .verifiable(Times.never());
 
     this.httpAdapterMock
-      .setup(x => x.execute('baseHost', request))
+      .setup(x => x.execute(
+        'baseHost',
+        It.is((param: TestRequest) => {
+          param.should.be.eql(request);
+          return true;
+        })
+      ))
       .returns(() => throwError(errorRemoteResponse))
       .verifiable(Times.once());
 
