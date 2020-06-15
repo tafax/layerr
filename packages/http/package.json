@@ -1,6 +1,6 @@
 {
   "name": "@layerr/http",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A powerful library to create an http client layer in your application",
   "author": "Matteo Tafani Alunno <matteo.tafanialunno@gmail.com>",
   "homepage": "https://github.com/tafax/layerr/tree/master/packages/bus#readme",
