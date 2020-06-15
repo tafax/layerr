@@ -2,12 +2,12 @@
 import { MessageTypeExtractorInterface } from '@layerr/bus';
 import { suite, test, IMock, Mock, Times, should } from '@layerr/test';
 import { of } from 'rxjs';
-import { RequestInterface } from '../../..';
 import { HttpLayerrError } from '../../../src/error/http-layerr.error';
 import { HttpLayerrErrorType } from '../../../src/error/http-layerr.error-type';
 import { HttpExecution } from '../../../src/http-execution';
 import { HttpBackendDecoratorResolver } from '../../../src/middleware/http-backend/decorator/http-backend.decorator-resolver';
 import { HttpBackendBusMiddleware } from '../../../src/middleware/http-backend/http-backend.bus-middleware';
+import { RequestInterface } from '../../../src/request/request.interface';
 import { TestRequest } from '../../fixtures/test.request';
 
 @suite class HttpBackendBusMiddlewareUnitTests {

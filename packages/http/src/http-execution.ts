@@ -80,6 +80,7 @@ export class HttpExecution<T> {
    */
   clone(update?: {
     baseHost?: string;
+    request?: RequestInterface;
     response?: RemoteResponse<JsonType>;
     content?: T | null;
   }): HttpExecution<T> {
@@ -97,7 +98,7 @@ export class HttpExecution<T> {
     }
 
     return new HttpExecution<T>({
-      request: this.request,
+      request: update.request || this.request,
       baseHost: update.baseHost || this.baseHost,
       retryAttemptCount: this.retryAttemptCount,
       retryDelay: this.retryDelay,

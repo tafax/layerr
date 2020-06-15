@@ -3,9 +3,10 @@ import { MessageMapperInterface } from '@layerr/bus';
 import { JsonType } from '@layerr/core';
 import { suite, test, Mock, IMock, Times, It, should } from '@layerr/test';
 import { of } from 'rxjs';
-import { RequestInterface, HttpLayerrError } from '../../..';
+import { HttpLayerrError } from '../../../src/error/http-layerr.error';
 import { HttpExecution } from '../../../src/http-execution';
 import { RequestHandlerBusMiddleware } from '../../../src/middleware/request-handler.bus-middleware';
+import { RequestInterface } from '../../../src/request/request.interface';
 import { RemoteResponse } from '../../../src/response/remote-response';
 
 @suite class RequestHandlerBusMiddlewareUnitTests {

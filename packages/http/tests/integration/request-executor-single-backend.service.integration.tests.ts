@@ -8,7 +8,6 @@ import {
 } from '@layerr/bus';
 import { ClassResolverInterface, JsonType, LoggerInterface } from '@layerr/core';
 import { of, throwError } from 'rxjs';
-import { HttpHeaders } from '../..';
 import { HttpAdapterInterface } from '../../src/adapter/http-adapter.interface';
 import { HttpLayerrError } from '../../src/error/http-layerr.error';
 import { HttpLayerrErrorType } from '../../src/error/http-layerr.error-type';
@@ -18,6 +17,7 @@ import { RequestHandlerBusMiddleware } from '../../src/middleware/request-handle
 import { ErrorRemoteResponse } from '../../src/response/error-remote-response';
 import { RemoteResponse } from '../../src/response/remote-response';
 import { RequestExecutor } from '../../src/service/request-executor';
+import { HttpHeaders } from '../../src/utilities/http-headers';
 import { TestRequest } from '../fixtures/test.request';
 import { TestRequestHandler } from '../fixtures/test.request-handler';
 
