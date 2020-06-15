@@ -1,7 +1,8 @@
 import { MessageMapperInterface, MessageBusMiddlewareInterface } from '@layerr/bus';
 import { Observable } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
-import { HttpLayerrError, HttpLayerrErrorType } from '../..';
+import { HttpLayerrErrorType } from '../error/http-layerr.error-type';
+import { HttpLayerrError } from '../error/http-layerr.error';
 import { HttpExecution } from '../http-execution';
 
 /**
