@@ -2,12 +2,13 @@
 import { LoggerInterface } from '@layerr/core';
 import { suite, test, IMock, Mock, Times, should } from '@layerr/test';
 import { Observable, throwError, TimeoutError } from 'rxjs';
-import { RequestInterface, HttpHeaders } from '../../..';
 import { HttpLayerrError } from '../../../src/error/http-layerr.error';
 import { HttpLayerrErrorType } from '../../../src/error/http-layerr.error-type';
 import { HttpExecution } from '../../../src/http-execution';
 import { ErrorExecutionBusMiddleware } from '../../../src/middleware/error-execution.bus-middleware';
+import { RequestInterface } from '../../../src/request/request.interface';
 import { ErrorRemoteResponse } from '../../../src/response/error-remote-response';
+import { HttpHeaders } from '../../../src/utilities/http-headers';
 
 @suite class ErrorExecutionBusMiddlewareUnitTests {
 

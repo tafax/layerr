@@ -1,8 +1,8 @@
 
 import { JsonType } from '@layerr/core';
 import { Observable, of } from 'rxjs';
-import { RequestInterface } from '../..';
 import { RequestHandlerInterface } from '../../src/request-handler/request-handler.interface';
+import { RequestInterface } from '../../src/request/request.interface';
 import { RemoteResponse } from '../../src/response/remote-response';
 
 export class TestRequestHandler implements RequestHandlerInterface {

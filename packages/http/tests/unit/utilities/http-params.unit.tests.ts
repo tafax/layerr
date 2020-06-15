@@ -1,6 +1,5 @@
 
 import { suite, test, should } from '@layerr/test';
-import { HttpHeaders } from '../../..';
 import { HttpParams } from '../../../src/utilities/http-params';
 
 @suite class HttpParamsUnitTests {

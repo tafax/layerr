@@ -2,8 +2,8 @@
 import { MessageBus } from '@layerr/bus';
 import { suite, test, IMock, Mock, It, Times, should } from '@layerr/test';
 import { of } from 'rxjs';
-import { RequestInterface } from '../../..';
 import { HttpExecution } from '../../../src/http-execution';
+import { RequestInterface } from '../../../src/request/request.interface';
 import { RequestExecutor } from '../../../src/service/request-executor';
 
 @suite class RequestExecutorUnitTests {
