@@ -10,7 +10,7 @@ import { RequestInterface } from './request.interface';
  * Defines the abstract base request. It provides a common object that should be extended
  * when we need to create a request.
  */
-export abstract class AbstractRequest implements RequestInterface {
+export abstract class AbstractRequest<T> implements RequestInterface {
 
   /**
    * The path of the request.
@@ -31,6 +31,11 @@ export abstract class AbstractRequest implements RequestInterface {
    * The query of the request.
    */
   private _query: HttpParams = new HttpParams();
+
+  /**
+   * The body of the request.
+   */
+  private _body?: T;
 
   /**
    * @inheritDoc
@@ -55,6 +60,7 @@ export abstract class AbstractRequest implements RequestInterface {
     responseType?: HttpResponseContent;
     headers?: HttpHeaders;
     query?: HttpParams;
+    body?: T;
   }) {
     this._path = init.path;
     this._version = init.version;
@@ -63,6 +69,7 @@ export abstract class AbstractRequest implements RequestInterface {
     this.responseType = init.responseType || HttpResponseContent.JSON;
     this._headers = init.headers || new HttpHeaders();
     this._query = init.query || new HttpParams();
+    this._body = init.body || undefined;
   }
 
   /**
@@ -100,7 +107,8 @@ export abstract class AbstractRequest implements RequestInterface {
    * @inheritDoc
    */
   getBody(): JsonType | null {
-    return null;
+    // This ensures a pure object body.
+    return this._body ? JSON.parse(JSON.stringify(this._body)) : null;
   }
 
   /**
@@ -112,6 +120,7 @@ export abstract class AbstractRequest implements RequestInterface {
     responseType?: HttpResponseContent;
     headers?: HttpHeaders;
     query?: HttpParams;
+    body?: T;
   }): RequestInterface {
     if (!update) {
       return Reflect.construct(this.constructor, [ {
@@ -122,6 +131,7 @@ export abstract class AbstractRequest implements RequestInterface {
         responseType: this.responseType,
         headers: this._headers,
         query: this._query,
+        body: this._body
       } ]);
     }
 
@@ -133,6 +143,7 @@ export abstract class AbstractRequest implements RequestInterface {
       responseType: update.responseType || this.responseType,
       headers: update.headers || this._headers,
       query: update.query || this._query,
+      body: update.body || this._body
     } ]);
   }
 }
