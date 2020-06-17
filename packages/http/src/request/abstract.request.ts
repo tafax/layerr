@@ -10,6 +10,7 @@ import { RequestInterface } from './request.interface';
  * Defines the basic type of the request updates.
  */
 export interface RequestUpdate {
+  path?: string;
   method?: HttpMethod;
   withCredentials?: boolean;
   responseType?: HttpResponseContent;
@@ -121,7 +122,11 @@ export abstract class AbstractRequest implements RequestInterface {
 
     // Clones the object.
     const clone = Object.create(this);
-    
+
+    clone['_path'] = update ? update.path || this._path : this._path;
+    clone['method'] = update ? update.method || this.method : this.method;
+    clone['withCredentials'] = update ? update.withCredentials || this.withCredentials : this.withCredentials;
+    clone['responseType'] = update ? update.responseType || this.responseType : this.responseType;
     clone['_headers'] = update ? new HttpHeaders(update.headers || this.getHeaders()) : this.getHeaders();
     clone['_query'] = update ? new HttpParams(update.query || this.getQuery()) : this.getQuery();
 
