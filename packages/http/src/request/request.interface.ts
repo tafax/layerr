@@ -1,9 +1,21 @@
 
 import { JsonType } from '@layerr/core';
-import { HttpHeaders } from '../utilities/http-headers';
+import { HttpHeaders, HttpHeadersInit } from '../utilities/http-headers';
 import { HttpMethod } from '../utilities/http-method';
-import { HttpParams } from '../utilities/http-params';
+import { HttpParams, HttpParamsInit } from '../utilities/http-params';
 import { HttpResponseContent } from '../utilities/http-response-content';
+
+/**
+ * Defines the basic type of the request updates.
+ */
+export interface RequestUpdate {
+  path?: string;
+  method?: HttpMethod;
+  withCredentials?: boolean;
+  responseType?: HttpResponseContent;
+  headers?: HttpHeadersInit;
+  query?: HttpParamsInit;
+}
 
 /**
  * Defines the interface for the actions.
@@ -56,11 +68,5 @@ export interface RequestInterface {
   /**
    * Clones the current request.
    */
-  clone(update?: {
-    method?: HttpMethod;
-    withCredentials?: boolean;
-    responseType?: HttpResponseContent;
-    headers?: HttpHeaders;
-    query?: HttpParams;
-  }): RequestInterface;
+  clone(update?: RequestUpdate): RequestInterface;
 }

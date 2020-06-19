@@ -1,22 +1,10 @@
 
 import { JsonType } from '@layerr/core';
-import { HttpHeaders, HttpHeadersInit } from '../utilities/http-headers';
+import { HttpHeaders } from '../utilities/http-headers';
 import { HttpMethod } from '../utilities/http-method';
-import { HttpParams, HttpParamsInit } from '../utilities/http-params';
+import { HttpParams } from '../utilities/http-params';
 import { HttpResponseContent } from '../utilities/http-response-content';
-import { RequestInterface } from './request.interface';
-
-/**
- * Defines the basic type of the request updates.
- */
-export interface RequestUpdate {
-  path?: string;
-  method?: HttpMethod;
-  withCredentials?: boolean;
-  responseType?: HttpResponseContent;
-  headers?: HttpHeadersInit;
-  query?: HttpParamsInit;
-}
+import { RequestInterface, RequestUpdate } from './request.interface';
 
 /**
  * Defines the basic type for the request initialization.
