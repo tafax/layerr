@@ -16,6 +16,7 @@ export { ErrorExecutionBusMiddleware } from './middleware/error-execution.bus-mi
 export { RequestExecutionBusMiddleware } from './middleware/request-execution.bus-middleware';
 export { RequestHandlerBusMiddleware } from './middleware/request-handler.bus-middleware';
 export { HttpBackendBusMiddleware } from './middleware/http-backend/http-backend.bus-middleware';
+export { HttpBackendDecoratorResolver } from './middleware/http-backend/decorator/http-backend.decorator-resolver';
 export { HttpBackend } from './middleware/http-backend/decorator/http-backend';
 
 // Pagination
