@@ -28,7 +28,7 @@ export class ErrorExecutionBusMiddleware implements MessageBusMiddlewareInterfac
           let rethrownError = error;
 
           if (error instanceof TimeoutError) {
-            this._logger.error(`TimeoutError: ${error.message} - RemoteCall: ${message.request.path}`);
+            this._logger.error(`TimeoutError: ${error.message} - Request: ${message.request.path}`);
             rethrownError = new HttpLayerrError(
               error.message,
               HttpLayerrErrorType.TIMEOUT,
@@ -45,7 +45,7 @@ export class ErrorExecutionBusMiddleware implements MessageBusMiddlewareInterfac
             const isUnknown = !error.status || error.status === 0;
 
             if (isUnknown) {
-              this._logger.error(`Unknown error: ${error.message} - RemoteCall: ${message.request.path}`);
+              this._logger.error(`Unknown error: ${error.message} - Request: ${message.request.path}`);
               rethrownError = new HttpLayerrError(
                 `No status code - Unknown error [ ${error.statusText} - ${error.message} ]`,
                 HttpLayerrErrorType.UNKNOWN,
@@ -75,7 +75,7 @@ export class ErrorExecutionBusMiddleware implements MessageBusMiddlewareInterfac
                   type = HttpLayerrErrorType.UNEXPECTED;
               }
 
-              this._logger.error(`Error: ${error.status} ${error.statusText} ${error.message} - RemoteCall: ${message.request.path}`);
+              this._logger.error(`Error: ${error.status} ${error.statusText} ${error.message} - Request: ${message.request.path}`);
               rethrownError = new HttpLayerrError(
                 `${error.statusText ? error.statusText : 'Generic error'} - ${error.message}`,
                 type,

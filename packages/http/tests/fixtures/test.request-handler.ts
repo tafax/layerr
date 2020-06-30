@@ -6,7 +6,7 @@ import { RequestInterface } from '../../src/request/request.interface';
 import { RemoteResponse } from '../../src/response/remote-response';
 
 export class TestRequestHandler implements RequestHandlerInterface {
-  handle(_remoteCall: RequestInterface, response: RemoteResponse<JsonType>): Observable<RemoteResponse<JsonType>> {
+  handle(_request: RequestInterface, response: RemoteResponse<JsonType>): Observable<RemoteResponse<JsonType>> {
     return of(response);
   }
 
