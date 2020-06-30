@@ -5,7 +5,7 @@ export declare type HttpParamsInit = HttpParams | string[][] | Record<string, st
 interface HttpParamsUpdate {
   name: string;
   value?: string;
-  op: 'w' | 'd';
+  op: 'w' | 'd' | 'a';
 }
 
 /**
@@ -16,37 +16,38 @@ export class HttpParams implements URLSearchParams {
   /**
    * The map to use to store values.
    */
-  private _map: Map<string, string> = new Map();
+  private _map: Map<string, string[]> = new Map();
 
   constructor(params?: HttpParamsInit) {
-
-    this._map = new Map();
 
     if (!params) {
       return;
     }
 
     if (Array.isArray(params)) {
-      this._map = new Map(params as unknown as readonly [ string, string ][]);
+      this._map = new Map(params.map(value => [ value[0], value[1].split(',') ]));
       return;
     }
 
     if (params instanceof HttpParams) {
       params.forEach(
-        (value: string, key: string) => this._map.set(key, value)
+        (value: string, key: string) => this._map.set(key, value.split(','))
       );
       return;
     }
 
     const headersInit = params as Record<string, string>;
-    Object.keys(headersInit).forEach((key: string) => this._map.set(key, (headersInit[key])));
+    Object.keys(headersInit).forEach((key: string) => this._map.set(key, headersInit[key].split(',')));
   }
 
   /**
    * @inheritDoc
    */
   append(name: string, value: string): HttpParams {
-    return this.clone({ name, value, op: 'w' });
+    if (!value) {
+      return this;
+    }
+    return this.clone({ name, value, op: 'a' });
   }
 
   /**
@@ -70,7 +71,10 @@ export class HttpParams implements URLSearchParams {
    * @inheritDoc
    */
   get(name: string): string | null {
-    return this._map.get(name) || null;
+    if (!this._map.has(name)) {
+      return null;
+    }
+    return this._map.get(name)!.join(',');
   }
 
   /**
@@ -80,7 +84,7 @@ export class HttpParams implements URLSearchParams {
     if (!this._map.has(name)) {
       return [];
     }
-    return [ this._map.get(name)! ];
+    return this._map.get(name)!;
   }
 
   /**
@@ -107,7 +111,7 @@ export class HttpParams implements URLSearchParams {
    */
   forEach(callbackfn: (value: string, key: string, parent: URLSearchParams) => void, thisArg?: any): void {
     this._map.forEach(
-      (value, key) => callbackfn(value, key, this),
+      (value, key) => callbackfn(value.join(','), key, this),
       thisArg
     );
   }
@@ -124,7 +128,7 @@ export class HttpParams implements URLSearchParams {
    */
   toString(): string {
     return Array.from(this._map.keys())
-      .map((key: string) => encodeURIComponent(key) + '=' + encodeURIComponent(this._map.get(key)!))
+      .map((key: string) => encodeURIComponent(key) + '=' + encodeURIComponent(this._map.get(key)!.join(',')))
       .join('&');
   }
 
@@ -136,7 +140,7 @@ export class HttpParams implements URLSearchParams {
     for (const key of Array.from(this._map.keys())) {
       obj = {
         ...obj,
-        [key]: this._map.get(key)
+        [key]: this._map.get(key)!.join(',')
       };
     }
     return obj;
@@ -157,14 +161,36 @@ export class HttpParams implements URLSearchParams {
         if (key === update.name) {
           continue;
         }
-        toCreate = Object.assign(toCreate, { [key]: update.value });
+        toCreate = Object.assign(toCreate, { [key]: object[key] });
       }
       return new HttpParams(toCreate);
     }
+
+    if (update.op === 'a') {
+      const object = this.toObject();
+      let toCreate = {};
+
+      if (Object.keys(object).includes(update.name)) {
+        for (const key of Object.keys(object)) {
+          if (key === update.name) {
+            toCreate = Object.assign(toCreate, { [key]: [ ...object[key].split(','), update.value ].join(',') });
+          } else {
+            toCreate = Object.assign(toCreate, { [key]: object[key] });
+          }
+        }
+      } else {
+        toCreate = {
+          ...object,
+          [update.name]: update.value!
+        };
+      }
+      return new HttpParams(toCreate);
+    }
+
     return new HttpParams({
       ...this.toObject(),
       [update.name]: update.value!
-    });
+    } as HttpParamsInit);
   }
 
 }

@@ -147,4 +147,18 @@ import { HttpParams } from '../../../src/utilities/http-params';
 
   }
 
+  @test 'should append data to the same entry'() {
+
+    let params = this.params.set('name', 'value1');
+    params = params.append('name2', 'value1');
+    params = params.append('name', 'value2');
+    params = params.set('name1', undefined);
+    params = params.append('name1', undefined);
+
+    params.toObject().should.be.eql({
+      name: 'value1,value2',
+      name2: 'value1'
+    });
+  }
+
 }
