@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "engines": {
-    "node": ">=10.9.0 <13.0.0",
+    "node": ">=12.20.0 <=14.15.1",
     "yarn": ">=1.21.1 <2"
   },
   "scripts": {
@@ -14,13 +14,16 @@
     "---------------- LERNA ----------------": "",
     "compile": "lerna run compile",
     "bootstrap": "lerna bootstrap",
-    "semantic-release": "lerna exec --concurrency 1 -- semantic-release -e semantic-release-monorepo --tag-format='${LERNA_PACKAGE_NAME}-v\\${version}'",
+    "release": "lerna exec --concurrency 1 -- semantic-release -e semantic-release-monorepo --tag-format='${LERNA_PACKAGE_NAME}-v\\${version}'",
     "---------------- TESTING ----------------": "",
     "test": "nyc ./node_modules/.bin/_mocha 'packages/**/tests/**/*.tests.ts'",
     "---------------- CI ----------------": "",
-    "test:ci": "yarn test && nyc report --reporter=text-lcov | coveralls",
+    "test:ci": "yarn test && nyc report --reporter=lcov",
     "---------------- LINT ----------------": "",
-    "lint": "eslint 'packages/**/src/**/*.ts'"
+    "lint": "eslint 'packages/**/src/**/*.ts'",
+    "---------------- UTILITY ----------------": "",
+    "modules:list": "find . -name \"node_modules\" -type d -prune -print | xargs du -chs",
+    "modules:prune": "find . -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \\;"
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "^1.1.0",
@@ -31,7 +34,6 @@
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.3",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.8.0",
     "lerna": "^3.16.4",
