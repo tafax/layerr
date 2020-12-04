@@ -10,6 +10,7 @@ import { HttpResponseContent } from '../utilities/http-response-content';
  */
 export interface RequestUpdate {
   path?: string;
+  rawPath?: string;
   method?: HttpMethod;
   withCredentials?: boolean;
   responseType?: HttpResponseContent;
