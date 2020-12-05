@@ -83,6 +83,13 @@ export abstract class AbstractRequest implements RequestInterface {
   }
 
   /**
+   * The raw path for this action.
+   */
+  get rawPath(): string {
+    return this._path;
+  }
+
+  /**
    * @inheritDoc
    */
   getHeaders(): HttpHeaders {
@@ -111,7 +118,7 @@ export abstract class AbstractRequest implements RequestInterface {
     // Clones the object.
     const clone = Object.create(this);
 
-    clone['_path'] = update ? update.path || this._path : this._path;
+    clone['_path'] = update ? update.rawPath || update.path || this._path : this._path;
     clone['method'] = update ? update.method || this.method : this.method;
     clone['withCredentials'] = update ? update.withCredentials || this.withCredentials : this.withCredentials;
     clone['responseType'] = update ? update.responseType || this.responseType : this.responseType;

@@ -104,4 +104,15 @@ import { TestRequest } from '../../fixtures/test.request';
     clonedRequest.getQuery().should.be.eql(query);
   }
 
+  @test 'should not duplicate version on multiple clone calls'() {
+    const firstUpdate = this.requestWithVersion.clone({ path: '/firstPath' });
+    firstUpdate.path.should.be.eql('/v1/firstPath');
+    const secondUpdate = firstUpdate.clone({ path: '/secondPath' });
+    secondUpdate.path.should.be.eql('/v1/secondPath');
+    const firstNoUpdate = secondUpdate.clone();
+    firstNoUpdate.path.should.be.eql('/v1/secondPath');
+    const secondNoUpdate = firstNoUpdate.clone();
+    secondNoUpdate.path.should.be.eql('/v1/secondPath');
+  }
+
 }
