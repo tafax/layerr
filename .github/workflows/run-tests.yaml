@@ -14,9 +14,10 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
-      - name: Use the nvm Node version
-        shell: bash -l {0}
-        run: nvm install
+      - name: Set up the Node environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.15.1'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
