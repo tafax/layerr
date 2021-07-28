@@ -1,69 +1,8 @@
 {
   "name": "@layerr/bus",
   "version": "1.3.0",
-  "description": "A powerful library to create a message bus layer in your application",
+  "description": "A powerful library to create an in-memory message bus layer in your application",
   "author": "Matteo Tafani Alunno <matteo.tafanialunno@gmail.com>",
   "homepage": "https://github.com/tafax/layerr/tree/master/packages/bus#readme",
-  "license": "MIT",
-  "module": "./dist/fesm5/bus.js",
-  "es2015": "./dist/fesm2015/bus.js",
-  "esm5": "./dist/esm5/public_api.js",
-  "esm2015": "./dist/esm2015/public_api.js",
-  "fesm5": "./dist/fesm5/bus.js",
-  "fesm2015": "./dist/fesm2015/bus.js",
-  "main": "./dist/bundles/bus.umd.js",
-  "typings": "./dist/types/public_api.d.ts",
-  "types": "./dist/types/public_api.d.ts",
-  "sideEffects": false,
-  "files": [
-    "dist/"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tafax/layerr.git"
-  },
-  "scripts": {
-    "---------------- UTILITY ----------------": "",
-    "clean": "shx rm -rf dist",
-    "lint": "tslint --project tsconfig.json 'src/**/*.ts' -t stylish",
-    "---------------- BUILDING ----------------": "",
-    "build": "yarn clean && tsc && tsc --target es2018 --outDir ./dist/esm2015",
-    "rollup": "rollup -c ../../compile/rollup.config.js --environment NODE_ENV:production --environment PKG:bus",
-    "compile": "yarn build && yarn rollup",
-    "---------------- TESTING ----------------": "",
-    "test": "nyc ../../node_modules/.bin/_mocha 'tests/**/*.tests.ts'"
-  },
-  "bugs": {
-    "url": "https://github.com/tafax/layerr/issues"
-  },
-  "dependencies": {
-    "@layerr/core": "*",
-    "ts-polyfill": "^3.5.3"
-  },
-  "peerDependencies": {
-    "rxjs": "~6.5.5"
-  },
-  "nyc": {
-    "include": [
-      "src/**/*.ts"
-    ],
-    "exclude": [
-      "node_modules/",
-      "src/**/errors/**/*.ts",
-      "dist/**/*.ts"
-    ],
-    "extension": [
-      ".ts"
-    ],
-    "reporter": [
-      "text-summary",
-      "html"
-    ],
-    "sourceMap": true,
-    "instrument": true,
-    "report-dir": "./coverage"
-  }
+  "license": "MIT"
 }

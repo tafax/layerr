@@ -1,5 +1,0 @@
-{
-  "ui": "mocha-typescript",
-  "require": "./register.js",
-  "reporter": "dot"
-}

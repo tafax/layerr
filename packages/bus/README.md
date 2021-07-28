@@ -1,7 +1,7 @@
 
 # BUS
 
-**BusLayerr** is a library to create a message bus layer in your application. It is
+**BusLayerr** is a library to create an in-memory message bus layer in your application. It is
 completely configurable using middlewares. Just imagine your next message :bus:
 
 It uses [RxJS](https://github.com/ReactiveX/RxJS) as internal engine. If you are not
