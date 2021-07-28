@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.test.json",
+  "compilerOptions": {
+    "baseUrl": "test"
+  },
+  "include": [
+    "test/**/*.test.ts"
+  ]
+}

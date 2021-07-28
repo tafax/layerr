@@ -1,19 +1,104 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "plugins": [
-    "@typescript-eslint"
-  ],
-  "env": {
-    "browser": true,
-    "node": true,
-    "mocha": true
-  },
-  "parser": "@typescript-eslint/parser",
-  "rules": {
-    "@typescript-eslint/no-explicit-any": "off"
-  }
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nrwl/nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
+      "rules": {
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "overrides": {
+              "constructors": "no-public",
+              "methods": "no-public",
+              "accessors": "no-public"
+            }
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "error",
+          {
+            "allowExpressions": true,
+            "allowTypedFunctionExpressions": true,
+            "allowHigherOrderFunctions": true,
+            "allowDirectConstAssertionInArrowFunctions": true
+          }
+        ],
+        "@typescript-eslint/no-unused-vars": ["error"],
+        "@typescript-eslint/prefer-readonly": 2,
+        "@typescript-eslint/no-empty-interface": 0,
+        "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
+        "@typescript-eslint/explicit-module-boundary-types": ["error"],
+        "@typescript-eslint/member-ordering": ["error"],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "variableLike",
+            "format": ["strictCamelCase"]
+          },
+          {
+            "selector": "property",
+            "modifiers": ["static"],
+            "format": ["UPPER_CASE"],
+            "leadingUnderscore": "forbid"
+          },
+          {
+            "selector": "variable",
+            "types": ["boolean"],
+            "format": ["PascalCase"],
+            "prefix": ["is", "should", "has", "can", "did", "will", "are"]
+          },
+          {
+            "selector": "interface",
+            "format": ["PascalCase"],
+            "custom": {
+              "regex": "^[A-Z]Interface$",
+              "match": false
+            }
+          },
+          {
+            "selector": "variable",
+            "modifiers": ["const"],
+            "format": ["StrictPascalCase", "strictCamelCase"]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.test.ts"],
+      "rules": {
+        "@typescript-eslint/no-non-null-assertion": 0,
+        "@typescript-eslint/no-unused-vars": 0,
+        "@typescript-eslint/explicit-function-return-type": 0,
+        "@typescript-eslint/naming-convention": 0,
+        "@typescript-eslint/member-ordering": 0,
+        "@typescript-eslint/ban-types": 0
+      }
+    }
+  ]
 }
