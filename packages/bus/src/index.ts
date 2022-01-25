@@ -5,6 +5,7 @@
 export * from './lib/bus/message-bus.interface';
 export * from './lib/bus/message-bus';
 export * from './lib/bus/middleware/message-bus-middleware.interface';
+export * from './lib/decorator/handle';
 export * from './lib/decorator/handler';
 export * from './lib/errors/bus.error';
 export * from './lib/factory/general-purpose-bus.factory';
@@ -18,6 +19,7 @@ export * from './lib/message-handler/handler-lookup/collection/abstract-collecti
 export * from './lib/message-handler/handler-lookup/collection/collection.handler-lookup';
 export * from './lib/message-handler/handler-lookup/collection/concurrent-collection.handler-lookup';
 export * from './lib/message-handler/handler-lookup/decorator/bus-decorator.keys';
+export * from './lib/message-handler/handler-lookup/decorator/class-decorator.handler-lookup';
 export * from './lib/message-handler/handler-lookup/decorator/decorator.handler-lookup';
 export * from './lib/message-handler/message-mapper/abstract-message-mapper';
 export * from './lib/message-handler/message-mapper/function.message-mapper';

@@ -8,7 +8,10 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["packages/bus/**/*.ts"] }
+          "options": {
+            "lintFilePatterns": ["packages/bus/src/**/*.ts"]
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -35,7 +38,8 @@
             "command": "npx semantic-release -e ./packages/bus/.releaserc.json"
           }
         }
-      }
+      },
+      "tags": []
     },
     "core": {
       "root": "packages/core",
@@ -44,7 +48,10 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["packages/core/**/*.ts"] }
+          "options": {
+            "lintFilePatterns": ["packages/core/src/**/*.ts"]
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -71,7 +78,8 @@
             "command": "npx semantic-release -e ./packages/core/.releaserc.json"
           }
         }
-      }
+      },
+      "tags": []
     },
     "http": {
       "root": "packages/http",
@@ -80,7 +88,10 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["packages/http/**/*.ts"] }
+          "options": {
+            "lintFilePatterns": ["packages/http/src/**/*.ts"]
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -107,8 +118,8 @@
             "command": "npx semantic-release -e ./packages/http/.releaserc.json"
           }
         }
-      }
+      },
+      "tags": []
     }
-  },
-  "cli": { "defaultCollection": "@nrwl/workspace" }
+  }
 }

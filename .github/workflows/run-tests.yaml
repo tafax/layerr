@@ -15,7 +15,7 @@ jobs:
       - name: Set up the Node environment
         uses: actions/setup-node@v1
         with:
-          node-version: '14.15.1'
+          node-version: '14.17.1'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -31,6 +31,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
+
+      - name: Run lint
+        run: yarn lint
 
       - name: Run tests
         run: yarn test:ci

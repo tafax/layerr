@@ -30,6 +30,13 @@ export class CompletableListCache<T extends CacheableItem, U> extends SimpleList
   }
 
   /**
+   * Returns the current completion checker.
+   */
+  get completionChecker(): CompletionCheckerInterface<U> {
+    return this._completionChecker;
+  }
+
+  /**
    * Gets the current state for the checker.
    */
   getState(): U {
@@ -42,13 +49,6 @@ export class CompletableListCache<T extends CacheableItem, U> extends SimpleList
    */
   setState(state: U): void {
     this._currentState = state;
-  }
-
-  /**
-   * Returns the current completion checker.
-   */
-  get completionChecker(): CompletionCheckerInterface<U> {
-    return this._completionChecker;
   }
 
   /**

@@ -1,12 +1,10 @@
-
 /**
- * Defines a set of metadata keys to use with decorators.
+ * Defines a set of metadata keys to use with decorators
+ * @deprecated
  */
 export class BusDecoratorKeys {
-
   /**
-   * The keys used to store the options related to a remote call.
+   * The keys used to store the options related to a remote call
    */
-  static DECORATOR_OPTIONS = 'layerr-bus:message-handler:options';
-
+  public static DECORATOR_OPTIONS = 'layerr-bus:message-handler:options';
 }

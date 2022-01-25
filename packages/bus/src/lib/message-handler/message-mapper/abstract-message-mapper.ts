@@ -9,12 +9,10 @@ import { MessageTypeExtractorInterface } from '../extractor/message-type-extract
  * get the identifier of a message and then get handler identifier.
  */
 export abstract class AbstractMessageMapper implements MessageMapperInterface {
-
   constructor(
     private readonly _messageLookup: HandlerLookupInterface,
     private readonly _extractor: MessageTypeExtractorInterface,
-  ) {
-  }
+  ) {}
 
   /**
    * @inheritDoc

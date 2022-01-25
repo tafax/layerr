@@ -1,5 +1,5 @@
 import { subscribeSpyTo } from '@hirez_io/observer-spy';
-import { jest, expect } from '@jest/globals';
+import { expect } from '@jest/globals';
 import { suite, test, params } from '@testdeck/jest';
 import { of, Observable } from 'rxjs';
 import { mock, instance, when } from 'ts-mockito';

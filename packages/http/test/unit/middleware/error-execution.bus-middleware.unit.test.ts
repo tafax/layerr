@@ -2,15 +2,15 @@ import { subscribeSpyTo } from '@hirez_io/observer-spy';
 import { suite, test, params } from '@testdeck/jest';
 import { throwError, TimeoutError } from 'rxjs';
 import { mock, instance, when } from 'ts-mockito';
+import { LoggerInterface } from '@layerr/core';
 import { resolvableInstance } from '../../../../../tests/index';
-import { LoggerInterface } from '../../../../core/src/lib/services/logger/logger.interface';
 import { HttpLayerrError } from '../../../src/lib/error/http-layerr.error';
 import { HttpLayerrErrorType } from '../../../src/lib/error/http-layerr.error-type';
 import { HttpExecution } from '../../../src/lib/http-execution';
 import { ErrorExecutionBusMiddleware } from '../../../src/lib/middleware/error-execution.bus-middleware';
 import { RequestInterface } from '../../../src/lib/request/request.interface';
-import { ErrorRemoteResponse } from '../../../src/lib/response/error-remote-response';
 import { HttpHeaders } from '../../../src/lib/utilities/http-headers';
+import { ErrorRemoteResponse } from '../../../src/lib/response/error-remote-response';
 
 @suite
 class ErrorExecutionBusMiddlewareUnitTest {
