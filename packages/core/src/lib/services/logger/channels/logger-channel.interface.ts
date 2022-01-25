@@ -1,4 +1,5 @@
 // Defines a set of types for the logger args.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export declare type LoggerArgs = string | number | boolean | Record<string, any>;
 
 /**

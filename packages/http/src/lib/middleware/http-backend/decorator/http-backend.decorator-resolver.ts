@@ -6,7 +6,7 @@ import { HttpBackendKeys } from './http-backend.keys';
 
 export class HttpBackendDecoratorResolver<T> implements HandlerLookupInterface {
 
-  private _extractor: DecoratorMetadataResolver = new DecoratorMetadataResolver(HttpBackendKeys.HTTP_BACKEND_OPTION);
+  private readonly _extractor: DecoratorMetadataResolver = new DecoratorMetadataResolver(HttpBackendKeys.HTTP_BACKEND_OPTION);
 
   /**
    * @inheritDoc

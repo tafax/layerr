@@ -1,23 +1,37 @@
 {
   "npmScope": "nx-layerr",
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "implicitDependencies": {
-    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     ".eslintrc.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "parallel": 1
+      }
     }
   },
   "targetDependencies": {
-    "build": [{ "target": "build", "projects": "dependencies" }]
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   },
-  "projects": {
-    "bus": { "tags": [] },
-    "core": { "tags": [] },
-    "http": { "tags": [] }
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
   },
-  "workspaceLayout": { "appsDir": "packages", "libsDir": "packages" }
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
 }

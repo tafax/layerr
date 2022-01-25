@@ -1,4 +1,3 @@
-
 import { ClassResolverInterface } from '@layerr/core';
 import { BusError } from '../../errors/bus.error';
 import { MessageTypeExtractorInterface } from '../extractor/message-type-extractor.interface';
@@ -11,19 +10,19 @@ import { AbstractMessageMapper } from './abstract-message-mapper';
  * get the identifier of a message and a resolver to instantiate a new handler.
  */
 export class MethodMessageMapper extends AbstractMessageMapper {
-
   constructor(
-    _messageLookup: HandlerLookupInterface,
-    _extractor: MessageTypeExtractorInterface,
-    private _classResolver: ClassResolverInterface
+    messageLookup: HandlerLookupInterface,
+    extractor: MessageTypeExtractorInterface,
+    private readonly _classResolver: ClassResolverInterface,
   ) {
-    super(_messageLookup, _extractor);
+    super(messageLookup, extractor);
   }
 
   /**
    * @inheritDoc
    */
-  getHandlers(message: any): Function[] {
+  //eslint-disable-next-line @typescript-eslint/ban-types
+  getHandlers(message: unknown): Function[] {
     // Gets the handler based on the message.
     const handlerIdentifier = this._getHandlerIdentifier(message);
 
@@ -36,8 +35,7 @@ export class MethodMessageMapper extends AbstractMessageMapper {
     const [ className, methodName ] = handlerIdentifier;
 
     // Resolves the handler function.
-    const handler = this._classResolver.resolve<any>(className);
+    const handler = this._classResolver.resolve<unknown>(className);
     return [ handler[methodName].bind(handler) ];
   }
-
 }

@@ -9,7 +9,6 @@ import { MessageTypeExtractorInterface } from '../extractor/message-type-extract
  * get the identifier of a message and a resolver to instantiate a new handler.
  */
 export class MessageMapper extends AbstractMessageMapper {
-
   constructor(
     messageLookup: HandlerLookupInterface,
     extractor: MessageTypeExtractorInterface,
@@ -30,5 +29,4 @@ export class MessageMapper extends AbstractMessageMapper {
     const handler = this._classResolver.resolve<Record<string, Function>>(handlerIdentifier);
     return [ handler.handle.bind(handler) ];
   }
-
 }

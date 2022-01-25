@@ -7,6 +7,6 @@ export class HttpBackendKeys {
   /**
    * The keys used to store the options related to.
    */
-  static HTTP_BACKEND_OPTION = 'layerr-http:http-backend:options';
+  public static HTTP_BACKEND_OPTION = 'layerr-http:http-backend:options';
 
 }
