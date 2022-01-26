@@ -38,11 +38,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install frontend dependencies
+      - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Compile the packages
-        run: yarn compile
+      - name: Build the packages
+        run: yarn build
 
       # We don't use the default token since it won't call the release trigger
       # It is an intentional limitation from GitHub
