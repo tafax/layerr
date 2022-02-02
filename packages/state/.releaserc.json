@@ -1,0 +1,19 @@
+{
+  "extends": "../../.releaserc.json",
+  "tagFormat": "@layerr/state-v${version}",
+  "plugins": [
+    [
+      "@abgov/nx-release",
+      {
+        "project": "state"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/packages/state"
+      }
+    ],
+    "@semantic-release/github"
+  ]
+}

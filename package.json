@@ -20,6 +20,7 @@
     "---------------- CI ----------------": "",
     "test:ci": "yarn test --coverage && lcov-result-merger './coverage/packages/**/lcov.info' './coverage/lcov.info'",
     "---------------- UTILITY ----------------": "",
+    "package": "nx workspace-generator package",
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
