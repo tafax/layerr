@@ -1,0 +1,9 @@
+{
+  "filewatcher.commands": [
+    {
+      "match": "packages\/.*\/lib\/.*",
+      "event": "onFolderChange",
+      "cmd": ".${workspaceRoot}/node_modules/barrelsby/bin/cli.js -c ${workspaceRoot}/.barrelsby.json -d $(echo ${fileDirname} | grep -E '^\/.*\/src' --only-matching)"
+    }
+  ]
+}

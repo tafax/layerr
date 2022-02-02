@@ -17,7 +17,11 @@
     "paths": {
       "@layerr/bus": ["packages/bus/src/index.ts", "../../bus/src/index.ts"],
       "@layerr/core": ["packages/core/src/index.ts", "../../core/src/index.ts"],
-      "@layerr/http": ["packages/http/src/index.ts", "../../http/src/index.ts"]
+      "@layerr/http": ["packages/http/src/index.ts", "../../http/src/index.ts"],
+      "@layerr/state": [
+        "packages/state/src/index.ts",
+        "../../state/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,5 +1,5 @@
 {
-  "npmScope": "nx-layerr",
+  "npmScope": "layerr",
   "affected": {
     "defaultBase": "master"
   },
