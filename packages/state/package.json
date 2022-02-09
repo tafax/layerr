@@ -1,0 +1,8 @@
+{
+  "name": "@layerr/state",
+  "version": "0.0.0",
+  "description": "A powerful library to create a state management layer in your application",
+  "author": "Matteo Tafani Alunno <matteo.tafanialunno@gmail.com>",
+  "homepage": "https://github.com/tafax/layerr/tree/master/packages/state#readme",
+  "license": "MIT"
+}

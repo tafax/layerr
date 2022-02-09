@@ -29,7 +29,8 @@
             "tsConfig": "packages/bus/tsconfig.lib.json",
             "packageJson": "packages/bus/package.json",
             "main": "packages/bus/src/index.ts",
-            "assets": ["packages/bus/*.md", "LICENSE"]
+            "assets": ["packages/bus/*.md", "LICENSE"],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         },
         "release": {
@@ -69,7 +70,8 @@
             "tsConfig": "packages/core/tsconfig.lib.json",
             "packageJson": "packages/core/package.json",
             "main": "packages/core/src/index.ts",
-            "assets": ["packages/core/*.md", "LICENSE"]
+            "assets": ["packages/core/*.md", "LICENSE"],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         },
         "release": {
@@ -109,7 +111,8 @@
             "tsConfig": "packages/http/tsconfig.lib.json",
             "packageJson": "packages/http/package.json",
             "main": "packages/http/src/index.ts",
-            "assets": ["packages/http/*.md", "LICENSE"]
+            "assets": ["packages/http/*.md", "LICENSE"],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         },
         "release": {
@@ -149,7 +152,8 @@
             "tsConfig": "packages/state/tsconfig.lib.json",
             "packageJson": "packages/state/package.json",
             "main": "packages/state/src/index.ts",
-            "assets": ["packages/state/*.md", "LICENSE"]
+            "assets": ["packages/state/*.md", "LICENSE"],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
           }
         },
         "release": {

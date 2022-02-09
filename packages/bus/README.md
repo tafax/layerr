@@ -12,12 +12,12 @@ comfortable with it, don't worry, you can use promise-like async code.
 Use [npm](https://www.npmjs.com/) package manager to install it.
 
 ```bash
-npm install @layerr/bus
+npm install @layerr/core @layerr/bus rxjs reflect-metadata
 ```
 
 Use [yarn](https://yarnpkg.com/) package manager to install it.
 ```bash
-yarn add @layerr/bus
+yarn add @layerr/core @layerr/bus rxjs reflect-metadata
 ```
 
 ## Documentation
