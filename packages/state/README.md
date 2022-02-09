@@ -9,12 +9,12 @@ It uses [RxJS](https://github.com/ReactiveX/RxJS) as internal engine.
 Use [npm](https://www.npmjs.com/) package manager to install it.
 
 ```bash
-npm install @layerr/state
+npm install @layerr/state rxjs
 ```
 
 Use [yarn](https://yarnpkg.com/) package manager to install it.
 ```bash
-yarn add @layerr/state
+yarn add @layerr/state rxjs
 ```
 
 ## Documentation

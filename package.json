@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "reflect-metadata": "^0.1.13",
-    "rxjs": "~6.5.5",
+    "rxjs": "^6.5.5",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
