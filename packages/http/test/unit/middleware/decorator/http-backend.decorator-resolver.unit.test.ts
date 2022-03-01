@@ -6,6 +6,7 @@ import { JsonType } from '../../../../../core/src/lib/utilities/json-type';
 import { HttpHeaders } from '../../../../src/lib/utilities/http-headers';
 import { HttpMethod } from '../../../../src/lib/utilities/http-method';
 import { HttpParams } from '../../../../src/lib/utilities/http-params';
+import { HttpRequestContent } from '../../../../src/lib/utilities/http-request-content';
 import { HttpResponseContent } from '../../../../src/lib/utilities/http-response-content';
 
 @HttpBackend('BACKEND')
@@ -14,6 +15,7 @@ class Message implements RequestInterface {
   public path: string;
   public method: HttpMethod;
   public withCredentials: boolean;
+  public contentType: HttpRequestContent;
   public responseType: HttpResponseContent;
   getHeaders(): HttpHeaders {
     throw new Error('Method not implemented.');
@@ -31,7 +33,7 @@ class Message implements RequestInterface {
 
 @suite
 class HttpBackendDecoratorResolverUnitTest {
-  
+
   private SUT: HttpBackendDecoratorResolver<unknown>;
 
   before() {
