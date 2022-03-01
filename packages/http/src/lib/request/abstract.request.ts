@@ -2,6 +2,7 @@ import { JsonType } from '@layerr/core';
 import { HttpHeaders } from '../utilities/http-headers';
 import { HttpMethod } from '../utilities/http-method';
 import { HttpParams } from '../utilities/http-params';
+import { HttpRequestContent } from '../utilities/http-request-content';
 import { HttpResponseContent } from '../utilities/http-response-content';
 import { RequestInterface, RequestUpdate } from './request.interface';
 
@@ -27,6 +28,11 @@ export abstract class AbstractRequest implements RequestInterface {
    * @inheritDoc
    */
   public readonly withCredentials: boolean = false;
+
+  /**
+   * @inheritDoc
+   */
+  public readonly contentType: HttpRequestContent = HttpRequestContent.APPLICATION_JSON;
 
   /**
    * @inheritDoc
@@ -58,6 +64,7 @@ export abstract class AbstractRequest implements RequestInterface {
     this._version = init.version;
     this.method = init.method || HttpMethod.GET;
     this.withCredentials = init.withCredentials || false;
+    this.contentType = init.contentType || HttpRequestContent.APPLICATION_JSON;
     this.responseType = init.responseType || HttpResponseContent.JSON;
     this._headers = init.headers ? new HttpHeaders(init.headers) : new HttpHeaders();
     this._query = init.query ? new HttpParams(init.query) : new HttpParams();
@@ -118,6 +125,7 @@ export abstract class AbstractRequest implements RequestInterface {
 
     clone['_path'] = update ? update.rawPath || update.path || this._path : this._path;
     clone['method'] = update ? update.method || this.method : this.method;
+    clone['contentType'] = update ? update.contentType || this.contentType : this.contentType;
     clone['withCredentials'] = update ? update.withCredentials || this.withCredentials : this.withCredentials;
     clone['responseType'] = update ? update.responseType || this.responseType : this.responseType;
     clone['_headers'] = update ? new HttpHeaders(update.headers || this.getHeaders()) : this.getHeaders();

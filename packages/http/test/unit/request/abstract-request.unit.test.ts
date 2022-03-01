@@ -2,6 +2,7 @@ import { suite, test } from '@testdeck/jest';
 import { HttpHeaders } from '../../../src/lib/utilities/http-headers';
 import { HttpMethod } from '../../../src/lib/utilities/http-method';
 import { HttpParams } from '../../../src/lib/utilities/http-params';
+import { HttpRequestContent } from '../../../src/lib/utilities/http-request-content';
 import { HttpResponseContent } from '../../../src/lib/utilities/http-response-content';
 import { TestRequest } from '../../fixtures/test.request';
 
@@ -92,6 +93,7 @@ class AbstractRestfulRequestUnitTests {
     expect(clonedRequest.path).toBe(request.path);
     expect(clonedRequest.version).toBe(request.version);
     expect(clonedRequest.method).toBe(request.method);
+    expect(clonedRequest.contentType).toBe(request.contentType);
     expect(clonedRequest.withCredentials).toBe(request.withCredentials);
     expect(clonedRequest.responseType).toBe(request.responseType);
     expect(clonedRequest.getHeaders()).toStrictEqual(request.getHeaders());
@@ -124,6 +126,7 @@ class AbstractRestfulRequestUnitTests {
       path: '/newPath',
       method: HttpMethod.DELETE,
       withCredentials: false,
+      contentType: HttpRequestContent.MULTIPART_FORM_DATA,
       responseType: HttpResponseContent.TEXT,
       headers: request.getHeaders().append('name', 'value'),
       query: request.getQuery().append('name', 'value'),
@@ -133,6 +136,7 @@ class AbstractRestfulRequestUnitTests {
     expect(clonedRequest.version).toBe('v1');
     expect(clonedRequest.method).toBe(HttpMethod.DELETE);
     expect(clonedRequest.withCredentials).toBeFalsy();
+    expect(clonedRequest.contentType).toBe(HttpRequestContent.MULTIPART_FORM_DATA);
     expect(clonedRequest.responseType).toBe(HttpResponseContent.TEXT);
     expect(clonedRequest.getHeaders()).toStrictEqual(request.getHeaders().append('name', 'value'));
     expect(clonedRequest.getQuery()).toStrictEqual(request.getQuery().append('name', 'value'));
