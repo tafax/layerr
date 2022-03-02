@@ -14,7 +14,7 @@ export class HttpLayerrError extends Error {
     private readonly _statusText: string | null,
     private readonly _request: RequestInterface | null,
     private readonly _original: Error | null,
-    private readonly _errorContent: never | null,
+    private readonly _errorContent: unknown | null,
   ) {
     super(message);
 
@@ -46,7 +46,7 @@ export class HttpLayerrError extends Error {
   /**
    * Gets the content of the error.
    */
-  get errorContent(): never | null {
+  get errorContent(): unknown | null {
     return this._errorContent;
   }
 

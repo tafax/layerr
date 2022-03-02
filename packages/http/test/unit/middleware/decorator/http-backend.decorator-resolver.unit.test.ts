@@ -1,8 +1,10 @@
-import { suite, test, params } from '@testdeck/jest';
-import { HttpBackendDecoratorResolver } from '../../../../src/lib/middleware/http-backend/decorator/http-backend.decorator-resolver';
+import { JsonType } from '@layerr/core';
+import { suite, test } from '@testdeck/jest';
 import { HttpBackend } from '../../../../src/lib/middleware/http-backend/decorator/http-backend';
+import {
+  HttpBackendDecoratorResolver,
+} from '../../../../src/lib/middleware/http-backend/decorator/http-backend.decorator-resolver';
 import { RequestInterface, RequestUpdate } from '../../../../src/lib/request/request.interface';
-import { JsonType } from '../../../../../core/src/lib/utilities/json-type';
 import { HttpHeaders } from '../../../../src/lib/utilities/http-headers';
 import { HttpMethod } from '../../../../src/lib/utilities/http-method';
 import { HttpParams } from '../../../../src/lib/utilities/http-params';
@@ -31,7 +33,7 @@ class Message implements RequestInterface {
 
 @suite
 class HttpBackendDecoratorResolverUnitTest {
-  
+
   private SUT: HttpBackendDecoratorResolver<unknown>;
 
   before() {

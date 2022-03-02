@@ -26,7 +26,7 @@ export class MessageMapper extends AbstractMessageMapper {
     const handlerIdentifier = this._getHandlerIdentifier(message);
     // Resolves the handler function.
     //eslint-disable-next-line @typescript-eslint/ban-types
-    const handler = this._classResolver.resolve<Record<string, Function>>(handlerIdentifier);
+    const handler = this._classResolver.resolve<Record<string, Function>>(handlerIdentifier as never);
     return [ handler.handle.bind(handler) ];
   }
 }
