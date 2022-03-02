@@ -2,7 +2,7 @@ import { BusError } from "../../../errors/bus.error";
 import { HandlerLookupInterface } from '../handler-lookup.interface';
 
 // Defines a convenience type to describe the message/handler pair.
-export interface MessageHandlerPair<T = never> {
+export interface MessageHandlerPair<T = unknown> {
   message: unknown;
   handler: T;
 }

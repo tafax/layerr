@@ -38,7 +38,7 @@ export class MessageBus<T> implements MessageBusInterface<T> {
    */
   handle<K>(message: T): Observable<K> {
     // Creates the middleware observables chain.
-    const execution$ = this._functionForNextMiddleware(0)(message as never)
+    const execution$ = this._functionForNextMiddleware(0)(message as unknown)
       .pipe(
         /**
          * Makes sure it can be shared between subscriptions.
@@ -65,14 +65,14 @@ export class MessageBus<T> implements MessageBusInterface<T> {
    * Creates the function for the next middleware.
    */
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private _functionForNextMiddleware(index: number): (message: never) => Observable<any> {
+  private _functionForNextMiddleware(index: number): (message: unknown) => Observable<any> {
     if (!this._middlewares[index]) {
       //eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      return (value: never) => of(value);
+      return (value: unknown) => of(value);
     }
 
     const middleware = this._middlewares[index];
     //eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    return (message: never) => middleware.handle(message, this._functionForNextMiddleware(index + 1));
+    return (message: unknown) => middleware.handle(message, this._functionForNextMiddleware(index + 1));
   }
 }

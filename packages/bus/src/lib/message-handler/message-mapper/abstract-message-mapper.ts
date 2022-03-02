@@ -17,11 +17,11 @@ export abstract class AbstractMessageMapper implements MessageMapperInterface {
   /**
    * @inheritDoc
    */
-  protected _getHandlerIdentifier(message: unknown): ClassType<never> {
+  protected _getHandlerIdentifier(message: unknown): ClassType<unknown> {
     // Extracts the identifier.
     const identifier = this._extractor.extract(message);
     // Gets the handler based on the message identifier.
-    return this._messageLookup.getValue(identifier) as ClassType<never>;
+    return this._messageLookup.getValue(identifier) as ClassType<unknown>;
   }
 
   /**
